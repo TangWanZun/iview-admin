@@ -1,14 +1,23 @@
+import Main from '@/components/main'
+/**
+ * 系统管理
+ */
 export default [
-  // 菜单定义
   {
-    path: '/sm/Menu',
-    name: 'Menu',
-    component: r => require.ensure([], () => r(require('@/views/sm/Menu')), 'smMenu')
-  },
-  // 角色定义
-  {
-    path: '/sm/Roles',
-    name: 'Roles',
-    component: r => require.ensure([], () => r(require('@/views/sm/Roles')), 'Roles')
+    path: '/sm',
+    name: "a8b78528734945cca6632800a6f29360",
+    component: Main,
+    meta:{title:'系统管理'},
+    children: [
+      {
+        path: 'Menu',
+        name: 'Menu',
+        meta: {
+          title: '菜单定义',
+          icon: 'md-notifications'
+        },
+        component: () => import('@/view/sm/Menu')
+      }
+    ]
   }
 ]

@@ -5,6 +5,7 @@ export default [
     path: '/wx',
     name: '76e9d46113a64846a63b453c1325fd63',
     component: Main,
+    meta:{title:'微信数据'},
     children: [
       {
         path: 'wx/WeiXinRegisterUser',

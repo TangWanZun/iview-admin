@@ -2,6 +2,7 @@ import parentView from '@/components/parent-view'
 // 获取页面组件
 import base from './routers/base'
 import wx from './routers/wx'
+import sm from './routers/sm'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -18,7 +19,7 @@ import wx from './routers/wx'
  *  beforeCloseName: (-) 设置该字段，则在关闭当前tab页时会去'@/router/before-close.js'里寻找该字段名对应的方法，作为关闭前的钩子函数
  * }
  */
-export default base.concat(wx)
+export default base.concat(wx,sm)
 let a = [
   // {
   //   path: '',
