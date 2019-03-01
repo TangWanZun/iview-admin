@@ -8,6 +8,7 @@
       v-model="winModal"
       title="编辑"
       :transfer="false"
+      :mask="false"
       @on-cancel="winOnCancel"
     >
       <!-- 自定义头部 -->

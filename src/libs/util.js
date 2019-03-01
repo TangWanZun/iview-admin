@@ -422,3 +422,16 @@ export const setTitle = (routeItem, vm) => {
   const resTitle = pageTitle ? `${title} - ${pageTitle}` : title
   window.document.title = resTitle
 }
+
+/**
+ * 根据fromdata字符串获得参数
+ */
+export function getQueryString(src) {
+	let srcArr = src.split('&');
+	let reObj = {};
+	srcArr.forEach((item,key)=>{
+		let itemArr = item.split('=');
+		reObj[itemArr[0]] = itemArr[1];
+	})
+	return reObj;
+}
