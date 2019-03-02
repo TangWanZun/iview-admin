@@ -12,6 +12,9 @@
     <div class="body">
         <slot></slot>
     </div>
+    <div class="foot">
+        <slot name="foot"></slot>
+    </div>
     <!-- 蒙版 -->
     <div v-if="thisVale" class="mask"></div>
   </div>
@@ -41,6 +44,10 @@ export default {
 <style lang="less" scoped>
 .page{
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height:~'calc( 100vh - 105px )';
 }
 .head {
   display: flex;
@@ -48,6 +55,9 @@ export default {
   justify-content: space-between;
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   padding:3px;
+  width: 100%;
+  flex-grow: 0;
+  flex-shrink: 0;
   .item{
       display: flex;
       align-items: center;
@@ -68,6 +78,16 @@ export default {
       }
   }
 }
+.body{
+    overflow: auto;
+    flex-grow: 1;
+}
+.foot{
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding:3px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
 // 遮罩
 .mask{
     position: absolute;
@@ -75,7 +95,7 @@ export default {
     left: 0px;
     width:100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.5);
 }
 </style>
 

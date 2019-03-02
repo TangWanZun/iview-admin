@@ -4,9 +4,10 @@
     <Modal
       :mask-closable="false"
       :fullscreen="fullscreen"
-      width="800px"
+      :width="width"
       v-model="winModal"
       title="编辑"
+      :styles="styles"
       :transfer="false"
       :mask="false"
       @on-cancel="winOnCancel"
@@ -25,6 +26,7 @@
         <Button size="large" @click="winOnCancel">取消</Button>
         <Button type="primary" size="large" :loading="winOkLoading" @click="winOnOk">提交</Button>
       </div>
+      <Spin size="large" fix v-if="spinShow"></Spin>
     </Modal>
   </div>
 </template>
@@ -36,9 +38,24 @@ export default {
     value: {
       type: Boolean
     },
+    spin:{
+      type:Boolean,
+      default:false
+    },
     //导入数据
     data: {
       type: Object
+    },
+    //modal宽度
+    width:{
+      type:String
+    },
+    //初始位置
+    styles:{
+      type:Object,
+      default(){
+        // return {top:'0px',left:'0px'}
+      }
     }
   },
   watch: {
@@ -50,11 +67,8 @@ export default {
           this.winModal = true;
         });
       }
-      if (newValue && JSON.stringify(this.data) !== "{}") {
-        //获取附表数据
-        this.getData();
-      }
     },
+    spin(val){this.spinShow = val},
     data(val) {
       this.formData = val;
     },
@@ -67,6 +81,8 @@ export default {
       formData: this.data,
       winModal: false,
       modalValue: this.value,
+      //spin显示
+      spinShow:this.spin,
       //ok按钮的loading
       winOkLoading: false,
       //是否为全屏显示
@@ -74,26 +90,37 @@ export default {
     };
   },
   methods: {
-    /**
-     * 获取附表数据
-     */
-    getData() {},
-    /**
-     * 数据清空
-     */
-    dataReset() {},
     //OK按钮的事件
-    winOnOk() {},
+    winOnOk() {
+      //确认按钮开启loading
+      this.winOkLoading = true;
+      this.$emit('onOk',{
+        //正确回调，将会关闭页面
+        success:this.winOnCancel,
+        //出现错误回调，页面不会关闭
+        fail:this.winOnError
+      })
+    },
     //关闭win框事件
     winOnCancel() {
+      let _this = this;
       //当组件关闭
       this.winModal = false;
       this.$nextTick(() => {
-        //组件销毁
-        this.modalValue = false;
-        //清空数据
-        this.dataReset();
+        //这里延时300毫秒，是为了展现modal框关闭动画
+        setTimeout(()=>{
+          //将组件恢复到初始状态
+          // Object.assign(this.$data,this.$options.data())
+          //组件销毁
+          _this.modalValue = false;
+        },300)
       });
+      // this.$emit('onCancel');
+    },
+    //关闭modal时出现错误
+    winOnError(){
+      //确认按钮取消loading
+      this.winOkLoading = false;
     }
   }
 };

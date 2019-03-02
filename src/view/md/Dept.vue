@@ -4,13 +4,9 @@
     <panel v-model="addWindow">
       <template slot="left">
         <i-input placeholder="请输入查询条件" class="header-left-input"></i-input>
-        <Button @click="test=!test">查询</Button>
+        <Button>查询</Button>
         <Button @click="addClick">新增</Button>
         <Button>删除</Button>
-        <Button icon="ios-download">保存排序</Button>
-      </template>
-      <template slot="right">
-        <Button type="info">构建模板</Button>
       </template>
       <div>
         <Table
@@ -23,26 +19,22 @@
         ></Table>
       </div>
       <template slot="foot">
-        <Page :total="100" show-elevator />
+        <Page :total="100" show-elevator/>
       </template>
     </panel>
     <!-- 菜单定义新增 -->
-    <MenuWindow 
-    ref="winModal" 
-    :data="winData" 
-    v-model="addWindow"
-    ></MenuWindow>
+    <win-modal ref="winModal" :data="winData" v-model="addWindow"></win-modal>
   </div>
 </template>
 
 <script>
-import MenuWindow from "./MenuWindow";
+import winModal from "./DeptModel";
 import panel from "@/components/base/panel/panel";
-import {getTableList} from "@/api/currency.js"
-// import 
+import { getTableList } from "@/api/currency.js";
+// import
 export default {
   components: {
-    MenuWindow,
+    winModal,
     panel
   },
   data() {
@@ -51,93 +43,54 @@ export default {
       addWindow: false,
       //loding
       tableLoading: true,
-      winData:{},
+      winData: {},
       tableColumns: [
-        {
+          {
           type: "index",
           width: 60,
           align: "center",
           key: "Rown"
         },
         {
-          title: "注册/关注时间",
-          key: "NCreateDate",
+          title: "部门编码",
+          key: "Code",
+          width: 180,
           tooltip: true
         },
         {
-          title: "昵称",
-          key: "NickName",
-          width: 150,
-          tooltip: true
-        },
-        {
-          title: "姓名",
-          key: "CardName",
-          width: 100
-        },
-        {
-          title: "注册",
-          width: 60
-        },
-        {
-          title: "认证",
-          width: 60
-        },
-        {
-          title: "性别",
-          key: "Sex",
-          width: 60
-        },
-        {
-          title: "手机号",
-          key: "Phone",
-          width: 110
-        },
-        {
-          title: "车牌号",
-          key: "CarNum",
-          tooltip: true,
-          width: 100
-        },
-        {
-          title: "VIN",
-          key: "VIN",
-          width: 175
-        },
-        {
-          title: "车型",
-          key: "CarStyleName",
+          title: "部门名称",
+          key: "Name",
+          width: 180,
           tooltip: true
         },
         {
           title: "归属公司",
           key: "CmpName",
           tooltip: true
-        }
+        },
       ],
       //表数据
-      tableData:[],
-      test:true
+      tableData: [],
+      test: true
     };
   },
   created() {
-    this.getData()
+    this.getData();
   },
   methods: {
     /**
      * 获取当前数据
      */
-    getData(page=1){
+    getData(page = 1) {
       this.tableData = [];
       this.tableLoading = true;
       getTableList({
-        tableName:'menuTable',
+        tableName: "deptTable",
         page
-      })
-      .then((res)=>{
+      }).then(res => {
         this.tableData = res.data.data || [];
         this.tableLoading = false;
-      })
+      });
     },
     /**
      * 添加一个菜单
