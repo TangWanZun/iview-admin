@@ -13,7 +13,7 @@ import {
   localRead
 } from '@/libs/util'
 import { saveErrorLogger } from '@/api/data'
-import { getRouterReq } from '@/api/routers'
+import { getRouterReq } from '@/api/user'
 import router from '@/router'
 import routers from '@/router/routers'
 import config from '@/config'
@@ -133,9 +133,9 @@ export default {
       })
     },
     // 动态获取菜单数据
-    getMenuData ({ commit, rootState }, params) {
+    getMenuList ({ commit, rootState }, params) {
       getRouterReq(params).then(res => {
-        commit('setMenuRspList', res.data)
+        commit('setMenuRspList', res)
       }).catch(e => {
         console.log(e)
       })

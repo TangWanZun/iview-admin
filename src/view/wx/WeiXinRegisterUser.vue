@@ -12,7 +12,19 @@
       <template slot="right">
         <Button type="info">构建模板</Button>
       </template>
-      <!-- <DraggableTree></DraggableTree> -->
+      <div>
+        <Table
+          stripe
+          :loading="tableLoading"
+          size="small"
+          :columns="tableColumns"
+          :data="tableData"
+          @on-row-dblclick="rowDblclick"
+        ></Table>
+      </div>
+      <template slot="foot">
+        <Page :total="100" show-elevator />
+      </template>
     </panel>
     <!-- 菜单定义新增 -->
     <MenuModal
@@ -24,10 +36,9 @@
 </template>
 
 <script>
-import MenuModal from './MenuModal'
+import MenuModal from './WeiXinRegisterUserModal'
 import panel from '@/components/base/panel/panel'
 import { getTableList } from '@/api/currency.js'
-// import { DraggableTree } from "vue-draggable-nested-tree";
 // import
 export default {
   components: {

@@ -1,6 +1,6 @@
 import {
   login,
-  logout,
+  // logout,
   getUserInfo,
   getMessage,
   getContentByMsgId,
@@ -15,6 +15,7 @@ export default {
   state: {
     userName: '',
     userId: '',
+    // 用户头像
     avatorImgPath: '',
     token: getToken(),
     access: '',
@@ -23,7 +24,8 @@ export default {
     messageUnreadList: [],
     messageReadedList: [],
     messageTrashList: [],
-    messageContentStore: {}
+    messageContentStore: {},
+    loginInfo: {}
   },
   mutations: {
     setAvator (state, avatorPath) {
@@ -65,6 +67,9 @@ export default {
       const msgItem = state[from].splice(index, 1)[0]
       msgItem.loading = false
       state[to].unshift(msgItem)
+    },
+    setLoginInfo (state, status) {
+      state.loginInfo = status
     }
   },
   getters: {
@@ -81,8 +86,8 @@ export default {
           userName,
           password
         }).then(res => {
-          const data = res.data
-          commit('setToken', data.token)
+          // const data = res.data
+          commit('setToken', 'admin')
           resolve()
         }).catch(err => {
           reject(err)
@@ -92,17 +97,17 @@ export default {
     // 退出登录
     handleLogOut ({ state, commit }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('setToken', '')
-          commit('setAccess', [])
-          resolve()
-        }).catch(err => {
-          reject(err)
-        })
+        // logout(state.token).then(() => {
+        //   commit('setToken', '')
+        //   commit('setAccess', [])
+        //   resolve()
+        // }).catch(err => {
+        //   reject(err)
+        // })
         // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
-        // commit('setToken', '')
-        // commit('setAccess', [])
-        // resolve()
+        commit('setToken', '')
+        commit('setAccess', [])
+        resolve()
       })
     },
     // 获取用户相关信息
@@ -110,13 +115,13 @@ export default {
       return new Promise((resolve, reject) => {
         try {
           getUserInfo(state.token).then(res => {
-            const data = res.data
-            commit('setAvator', data.avator)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
+            commit('setLoginInfo', res.LoginInfo)
+            // commit('setAvator', data.avator)
+            // commit('setUserName', data.name)
+            // commit('setUserId', data.user_id)
+            // commit('setAccess', data.access)
             commit('setHasGetInfo', true)
-            resolve(data)
+            resolve(res)
           }).catch(err => {
             reject(err)
           })

@@ -92,7 +92,7 @@ export default {
     },
     cacheList () {
       const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
-      console.log(list);
+      console.log(list)
       return list
     },
     menuList () {
@@ -120,8 +120,7 @@ export default {
     ]),
     ...mapActions([
       'handleLogin',
-      'getUnreadMessageCount',
-      'getMenuData'
+      'getUnreadMessageCount'
     ]),
     // 当点击菜单上的页签的时候,或者是当前页签的时候
     turnToPage (route) {
@@ -193,7 +192,7 @@ export default {
       })
     }
     // 获取未读消息条数
-    this.getUnreadMessageCount()
+    // this.getUnreadMessageCount()
   }
 }
 </script>

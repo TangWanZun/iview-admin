@@ -26,8 +26,12 @@ export default {
   },
   methods: {
     ...mapActions([
+      // 提交用户名密码
       'handleLogin',
-      'getUserInfo'
+      // 获取userInfo
+      'getUserInfo',
+      // 获取左侧菜单树
+      'getMenuList'
     ]),
     handleSubmit ({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
@@ -36,6 +40,7 @@ export default {
             name: this.$config.homeName
           })
         })
+        this.getMenuList()
       })
     }
   }

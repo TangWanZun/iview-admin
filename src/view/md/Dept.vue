@@ -28,87 +28,84 @@
 </template>
 
 <script>
-import winModal from "./DeptModel";
-import panel from "@/components/base/panel/panel";
-import { getTableList } from "@/api/currency.js";
+import winModal from './DeptModel'
+import panel from '@/components/base/panel/panel'
+import { getTableList } from '@/api/currency.js'
 // import
 export default {
   components: {
     winModal,
     panel
   },
-  data() {
+  data () {
     return {
-      //显示新增菜单定义框
+      // 显示新增菜单定义框
       addWindow: false,
-      //loding
+      // loding
       tableLoading: true,
       winData: {},
       tableColumns: [
-          {
-          type: "index",
+        {
+          type: 'index',
           width: 60,
-          align: "center",
-          key: "Rown"
+          align: 'center',
+          key: 'Rown'
         },
         {
-          title: "部门编码",
-          key: "Code",
+          title: '部门编码',
+          key: 'Code',
           width: 180,
           tooltip: true
         },
         {
-          title: "部门名称",
-          key: "Name",
+          title: '部门名称',
+          key: 'Name',
           width: 180,
           tooltip: true
         },
         {
-          title: "归属公司",
-          key: "CmpName",
+          title: '归属公司',
+          key: 'CmpName',
           tooltip: true
-        },
+        }
       ],
-      //表数据
+      // 表数据
       tableData: [],
       test: true
-    };
+    }
   },
-  created() {
-    this.getData();
+  created () {
+    this.getData()
   },
   methods: {
     /**
      * 获取当前数据
      */
-    getData(page = 1) {
-      this.tableData = [];
-      this.tableLoading = true;
+    getData (page = 1) {
+      this.tableData = []
+      this.tableLoading = true
       getTableList({
-        tableName: "deptTable",
+        tableName: 'deptTable',
         page
       }).then(res => {
-        this.tableData = res.data.data || [];
-        this.tableLoading = false;
-      });
+        this.tableData = res || []
+        this.tableLoading = false
+      })
     },
     /**
      * 添加一个菜单
      */
-    addClick() {
-      this.$refs.winModal.show();
+    addClick () {
+      this.$refs.winModal.show()
     },
     /**
      * 双击用户表列项
      */
-    rowDblclick(data) {
-      this.$refs.winModal.show(data);
+    rowDblclick (data) {
+      this.$refs.winModal.show(data)
     }
   }
-};
+}
 </script>
 <style lang="less" scoped>
 </style>
-
-
-

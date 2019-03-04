@@ -6,24 +6,34 @@ const USER_MAP = {
     access: ['super_admin', 'admin'],
     token: 'super_admin',
     avator: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png'
-  },
-  admin: {
-    name: 'admin',
-    user_id: '2',
-    access: ['admin'],
-    token: 'admin',
-    avator: 'https://avatars0.githubusercontent.com/u/20942571?s=460&v=4'
   }
+}
+
+const USER_INFO = {
+  'data':
+  {
+    'LoginInfo': { 'Id': 0, 'UserCode': 'admin', 'UserCodeAlias': 'administrator', 'UserName': '系统管理员', 'CmpCode': 'G00033', 'CmpName': '北京鹏龙海依捷汽车销售服务有限公司', 'DeptCode': 'D0000015', 'DeptName': 'BDC', 'BranchCode': '', 'BranchName': '', 'ProfilePhoto': '' },
+    'IsBindWeChat': true
+  },
+  'success': true,
+  'msg': '操作已成功完成！'
 }
 
 export const login = req => {
   req = JSON.parse(req.body)
-  return { token: USER_MAP[req.userName].token }
+  return {
+    'data':
+    {
+
+    },
+    'success': true,
+    'msg': '操作已成功完成！'
+  }
 }
 
 export const getUserInfo = req => {
-  const params = getParams(req.url)
-  return USER_MAP[params.token]
+  // const params = getParams(req.url)
+  return USER_INFO
 }
 
 export const logout = req => {

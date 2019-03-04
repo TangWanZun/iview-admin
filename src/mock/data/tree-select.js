@@ -25,7 +25,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Images',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -36,7 +38,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Role',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -47,7 +51,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Reportuser',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -58,7 +64,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Groupgo',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -69,7 +77,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartorganisation',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -80,7 +90,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'CustomTable',
-          'children': []
+          'children': [
+
+          ]
         }
       ]
     },
@@ -103,7 +115,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatSetter',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -114,7 +128,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatEvm',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -125,7 +141,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatTem',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -136,7 +154,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatMenu',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -147,7 +167,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatPam',
-          'children': []
+          'children': [
+
+          ]
         }
       ]
     },
@@ -170,7 +192,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Cmp1',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -181,7 +205,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Dept1',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -192,7 +218,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Branch1',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -203,7 +231,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Position1',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -214,40 +244,48 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Ohem',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
           'ScopeName': 'md',
           'id': 'CarBrand',
           'parentId': '5522c8b95c5c4a9d8286c73bb1deb80c',
-          'text': '品牌',
+          'text': '品  牌',
           'leaf': true,
           'expanded': true,
           'iconCls': 'Brand',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
           'ScopeName': 'md',
           'id': 'CarSer',
           'parentId': '5522c8b95c5c4a9d8286c73bb1deb80c',
-          'text': '车系',
+          'text': '车  系',
           'leaf': true,
           'expanded': true,
           'iconCls': 'CarSer',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
           'ScopeName': 'md',
           'id': 'CarStyle',
           'parentId': '5522c8b95c5c4a9d8286c73bb1deb80c',
-          'text': '车型',
+          'text': '车  型',
           'leaf': true,
           'expanded': true,
           'iconCls': 'CarStyle',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -258,7 +296,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'OCar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -269,7 +309,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'ReservePlan',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -280,7 +322,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'TimedTask',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -291,7 +335,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatTag',
-          'children': []
+          'children': [
+
+          ]
         }
       ]
     },
@@ -314,7 +360,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'VipLevel',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -325,7 +373,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'ECardRules',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -336,7 +386,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'BalanceRules',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -347,7 +399,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'ScoreRules',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -358,7 +412,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'ECardRelease',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -369,7 +425,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'BalanceRelease',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -380,7 +438,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'ScoreRelease',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -391,7 +451,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'ConsumeRelease',
-          'children': []
+          'children': [
+
+          ]
         }
       ]
     },
@@ -414,7 +476,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatRegUser',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -425,29 +489,35 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'VipPlat',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
           'ScopeName': 'wx',
           'id': 'WeiXinReserve',
           'parentId': '76e9d46113a64846a63b453c1325fd63',
-          'text': '预约单',
+          'text': '预 约 单',
           'leaf': true,
           'expanded': true,
           'iconCls': 'Reserve',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
           'ScopeName': 'wx',
           'id': 'WeiXinRescue',
           'parentId': '76e9d46113a64846a63b453c1325fd63',
-          'text': '救援单',
+          'text': '救 援 单',
           'leaf': true,
           'expanded': true,
           'iconCls': 'Rescue',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -458,7 +528,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'TimedReport',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -469,7 +541,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatActity',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -480,7 +554,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'SignUp',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -491,7 +567,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatNews',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -502,7 +580,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'WeChatMsg',
-          'children': []
+          'children': [
+
+          ]
         }
       ]
     },
@@ -525,7 +605,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -536,7 +618,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -547,7 +631,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -558,7 +644,22 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
+        },
+        {
+          'MenuType': 'A02',
+          'ScopeName': 'rp',
+          'id': 'a90145b769b84eab8f6bd1c654bd3e30',
+          'parentId': '8d6d481d597943a28aa2bc55cffa5edf',
+          'text': '104车主微信平台累计数据汇总',
+          'leaf': true,
+          'expanded': true,
+          'iconCls': 'Chartbar',
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -569,7 +670,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Mapclipboard',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -580,7 +683,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Usercomment',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -591,7 +696,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Layers',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A01',
@@ -602,7 +709,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbaradd',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -613,7 +722,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -624,7 +735,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -635,7 +748,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -646,7 +761,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -657,7 +774,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -668,7 +787,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -679,7 +800,9 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         },
         {
           'MenuType': 'A02',
@@ -690,50 +813,11 @@ export const treeData =
           'leaf': true,
           'expanded': true,
           'iconCls': 'Chartbar',
-          'children': []
+          'children': [
+
+          ]
         }
       ]
     }
   ]
 }
-
-export const newTreeData = [
-  {
-    id: 'a',
-    title: 'a',
-    children: [
-      {
-        id: 'a1',
-        title: 'a-1',
-        children: [
-          {
-            id: 112,
-            title: '1-1-2'
-          },
-          {
-            id: 'a12',
-            title: 'a-1-2'
-          },
-          {
-            id: 'a13',
-            title: 'a-1-3'
-          },
-          {
-            id: 'a14',
-            title: 'a-1-4'
-          }
-        ]
-      },
-      {
-        id: 'a2',
-        title: 'a-2',
-        children: [
-          {
-            id: 'a21',
-            title: 'b-2-1'
-          }
-        ]
-      }
-    ]
-  }
-]

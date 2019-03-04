@@ -25,7 +25,8 @@ Mock.mock(/\/message\/restore/, restoreTrash)
 Mock.mock(/\/message\/count/, messageCount)
 Mock.mock(/\/get_org_data/, getOrgData)
 Mock.mock(/\/get_tree_select_data/, getTreeSelectData)
-Mock.mock(/\/get_router/, getRouter)
+// 动态获取左侧菜单
+Mock.mock(/\/Home\/GetLoginMenus/, getRouter)
 Mock.mock(/\/GetTableList/, getTableList)
 
 export default Mock

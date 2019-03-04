@@ -4,7 +4,8 @@
     <winModal 
     v-model="winModalValue"
     width="800px"
-    :spin="spinShow">
+    :spin="spinShow"
+    @onOk="onOk">
       <div class="body">
         <div class="header">
           <Row :gutter="20">
@@ -424,7 +425,7 @@ export default {
           title: "授权截至",
           key: "L2AuthDate",
           tooltip: true,
-          width: "100px"
+          minWidth:150
         },
         {
           title: "默认使用",
@@ -490,8 +491,8 @@ export default {
         })
       ])
         .then((resArr)=>{
-          this.tab2data = resArr[0].data.data || [];
-          this.tab3data = resArr[1].data.data || [];
+          this.tab2data = resArr[0] || [];
+          this.tab3data = resArr[1] || [];
           this.spinShow = false;
         })
       return;
@@ -505,6 +506,13 @@ export default {
         url: "GetWeiXinRegisterUser4List",
         success(res) {}
       });
+    },
+    //点击提交按钮
+    onOk({success,error}){
+      setTimeout(()=>{
+        this.$Message.error('出现了一个异常');
+        error();
+      },500)
     }
   }
 };
