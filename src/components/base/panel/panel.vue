@@ -12,9 +12,6 @@
     <div class="body">
         <slot></slot>
     </div>
-    <div class="foot">
-        <slot name="foot"></slot>
-    </div>
     <!-- 蒙版 -->
     <div v-if="thisVale" class="mask"></div>
   </div>

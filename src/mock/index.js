@@ -3,6 +3,7 @@ import { login, logout, getUserInfo } from './login'
 import { getTableData, getDragList, uploadImage, getOrgData, getTreeSelectData, getRouter } from './data'
 import { getMessageInit, getContentByMsgId, hasRead, removeReaded, restoreTrash, messageCount } from './user'
 import { getTableList } from './data/getTableList.js'
+import { getDynamicList } from './data/getDynamicList.js'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
 Mock.setup({
@@ -27,6 +28,8 @@ Mock.mock(/\/get_org_data/, getOrgData)
 Mock.mock(/\/get_tree_select_data/, getTreeSelectData)
 // 动态获取左侧菜单
 Mock.mock(/\/Home\/GetLoginMenus/, getRouter)
+//通用接口
 Mock.mock(/\/GetTableList/, getTableList)
+Mock.mock(/\/GetDynamicList/, getDynamicList)
 
 export default Mock

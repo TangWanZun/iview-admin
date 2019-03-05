@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import winModal from "./DeptModel";
+import winModal from "./baseModal";
 import panel from "@/components/base/panel/panel";
 import { getTableList } from "@/api/currency.js";
 // import

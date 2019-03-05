@@ -1,11 +1,7 @@
 <template>
   <!-- 菜单定义 -->
   <div class="box">
-    <winModal
-    v-model="winModalValue"
-    width="800px"
-    :spin="spinShow"
-    @onOk="onOk">
+    <winModal v-model="winModalValue" width="800px" :spin="spinShow" @onOk="onOk">
       <div class="body">
         <div class="header">
           <Row :gutter="20">
@@ -191,8 +187,13 @@
             <TabPane label="车辆档案" name="tab2">
               <div class="header">
                 <div class="header-left">
+                  <tableSelect
+                    width="550"
+                    :config="tab2tableSelectConfig"
+                    @on-row-dblclick="tab2tableSelectOnRowDblclick"
+                  ></tableSelect>
                   <!-- 复杂查询 -->
-                  <Poptip placement="bottom-start" trigger="focus" transfer width="auto">
+                  <!-- <Poptip placement="bottom-start" trigger="focus" transfer width="auto">
                     <i-input placeholder="请输入查询条件" style="width:150px"></i-input>
                     <Table
                       size="small"
@@ -203,7 +204,7 @@
                       :data="[]"
                       slot="content"
                     ></Table>
-                  </Poptip>
+                  </Poptip>-->
                   <Button>删除行</Button>
                   <Button>新增车挡</Button>
                   <Button>修改车挡</Button>
@@ -242,19 +243,24 @@
             <TabPane label="会员卡" name="tab3">
               <div class="header">
                 <div class="header-left">
+                  <tableSelect
+                    width="700"
+                    :config="tab3tableSelectConfig"
+                    @on-row-dblclick="tab2tableSelectOnRowDblclick"
+                  ></tableSelect>
                   <!-- 复杂查询 -->
-                  <Poptip placement="bottom-start" trigger="focus" transfer width="auto">
+                  <!-- <Poptip placement="bottom-start" trigger="focus" transfer width="auto">
                     <i-input placeholder="请输入查询条件" style="width:150px"></i-input>
                     <Table
                       size="small"
                       height="150"
-                      width="600"
+                      width="700"
                       ref="selection"
                       :columns="tab3inputTable"
                       :data="[]"
                       slot="content"
                     ></Table>
-                  </Poptip>
+                  </Poptip>-->
                   <Button>删除行</Button>
                 </div>
               </div>
@@ -310,201 +316,239 @@
 </template>
 
 <script>
-import winModalMixin from '@/components/base/panel/winModalMixin.js'
-import { tInput } from '@/components/base'
-import { getTableList } from '@/api/currency.js'
+import winModalMixin from "@/components/base/panel/winModalMixin.js";
+import { tInput, tableSelect } from "@/components/base";
+import { getTableList } from "@/api/currency.js";
 export default {
   mixins: [winModalMixin],
   components: {
-    tInput
+    tInput,
+    tableSelect
   },
-  data () {
+  data() {
     return {
       // 主数据
       formData: {},
       // madel加载
       spinShow: false,
+      //车辆档案中复杂查询框配置
+      tab2tableSelectConfig: {
+        columns: [
+          {
+            title: "车牌号",
+            key: "CarNum",
+            tooltip: true,
+            width: 100
+          },
+          {
+            title: "VIN",
+            key: "VIN",
+            tooltip: true,
+            width: 170
+          },
+          {
+            key: "CardName",
+            tooltip: true,
+            title: "车主"
+          },
+          {
+            title: "会员卡",
+            tooltip: true,
+            key: "VipCode",
+            width: 160
+          }
+        ],
+        data: {
+          scopeName: "wx",
+          docName: "WeiXinRegisterUser",
+          codeName: "WeiXinRegisterUserCar",
+          needTotal: true
+        }
+      },
+      //会员卡中复杂查询框配置
+      tab3tableSelectConfig: {
+        columns: [
+          {
+            title: "会员卡",
+            key:'VipCode',
+            width: 160
+          },
+          {
+            title: "客户名称",
+            key:'CardName',
+          },
+          {
+            title: "手机号",
+            key:'Phone',
+          },
+          {
+            title: "车牌号",
+            key:'CarNum',
+          },
+          {
+            title: "VIN",
+            key:'VIN',
+            width: 170
+          }
+        ],
+        data: {
+          scopeName: "wx",
+          docName: "WeiXinRegisterUser",
+          codeName: "WeiXinRegisterVipCode",
+          needTotal: true
+        }
+      },
       // 标签2表格列项
       tab2col: [
         {
-          type: 'selection',
+          type: "selection",
           width: 60,
-          align: 'center'
+          align: "center"
         },
         {
-          title: '车牌号',
-          key: 'L1CarNum',
-          width: '110px'
+          title: "车牌号",
+          key: "L1CarNum",
+          width: "110px"
         },
         {
-          title: 'VIN',
-          key: 'L1VIN',
-          width: '220px'
+          title: "VIN",
+          key: "L1VIN",
+          width: "220px"
         },
         {
-          title: '车辆关系',
+          title: "车辆关系",
           // key:'L1RelationShip',
-          slot: 'L1RelationShip'
+          slot: "L1RelationShip"
         },
         {
-          title: '车主',
-          key: 'L1CarOwner'
+          title: "车主",
+          key: "L1CarOwner"
         },
         {
-          title: '默认使用',
-          width: '90px',
-          align: 'center',
-          slot: 'L1IsDefaultUsed'
+          title: "默认使用",
+          width: "90px",
+          align: "center",
+          slot: "L1IsDefaultUsed"
         }
       ],
       // 标签3表格列项
       tab3col: [
         {
-          type: 'selection',
+          type: "selection",
           width: 60,
-          align: 'center',
-          fixed: 'left'
+          align: "center",
+          fixed: "left"
         },
         {
-          title: '会员卡',
-          width: '170px',
-          key: 'L2VipCode'
+          title: "会员卡",
+          width: "170px",
+          key: "L2VipCode"
           // fixed: "left"
         },
         {
-          title: '会员卡关系',
-          key: 'L2RelationShip',
-          width: '100px'
+          title: "会员卡关系",
+          key: "L2RelationShip",
+          width: "100px"
         },
         {
-          title: '车牌号',
-          key: 'L2CarNum',
+          title: "车牌号",
+          key: "L2CarNum",
           tooltip: true,
-          width: '120px'
+          width: "120px"
         },
         {
-          title: 'VIN',
-          key: 'L2VIN',
+          title: "VIN",
+          key: "L2VIN",
           tooltip: true,
-          width: '160px'
+          width: "160px"
         },
         {
-          title: '车主',
-          key: 'L2CarOwner',
+          title: "车主",
+          key: "L2CarOwner",
           tooltip: true,
-          width: '100px'
+          width: "100px"
         },
         {
-          title: '能查看履历',
-          slot: 'L2ShowWxRecord',
-          width: '100px',
-          align: 'center'
+          title: "能查看履历",
+          slot: "L2ShowWxRecord",
+          width: "100px",
+          align: "center"
         },
         {
-          title: '积分权限',
-          key: 'L2BalanceOpt',
-          width: '100px'
+          title: "积分权限",
+          key: "L2BalanceOpt",
+          width: "100px"
         },
         {
-          title: '储值权限',
-          key: 'L2ScoreOpt',
-          width: '100px'
+          title: "储值权限",
+          key: "L2ScoreOpt",
+          width: "100px"
         },
         {
-          title: '卡券权限',
-          key: 'L2ECardOpt',
-          width: '100px'
+          title: "卡券权限",
+          key: "L2ECardOpt",
+          width: "100px"
         },
         {
-          title: '能查看消费',
-          slot: 'L2ShowXfRecord',
-          width: '100px',
-          align: 'center'
+          title: "能查看消费",
+          slot: "L2ShowXfRecord",
+          width: "100px",
+          align: "center"
         },
         {
-          title: '授权截至',
-          key: 'L2AuthDate',
+          title: "授权截至",
+          key: "L2AuthDate",
           tooltip: true,
           minWidth: 150
         },
         {
-          title: '默认使用',
-          width: '90px',
-          slot: 'L2IsDefaultUsed',
-          align: 'center'
+          title: "默认使用",
+          width: "90px",
+          slot: "L2IsDefaultUsed",
+          align: "center"
         }
       ],
-      // 标签2查询input复杂表列项
-      tab2inputTable: [
-        {
-          title: 'VIN',
-          width: 160
-        },
-        {
-          title: '车主'
-        },
-        {
-          title: '会员卡',
-          width: 160
-        }
-      ],
-      // 标签3查询input复杂表列项
-      tab3inputTable: [
-        {
-          title: '会员卡',
-          width: 160
-        },
-        {
-          title: '客户名称'
-        },
-        {
-          title: '手机号'
-        },
-        {
-          title: '车牌号'
-        },
-        {
-          title: 'VIN',
-          width: 160
-        }
-      ],
+
       // 标签2表格数据
       tab2data: [],
       // 标签3表格数据
       tab3data: []
-    }
+    };
   },
   methods: {
     /**
      * 获取相关的附表数据
      */
-    getData (data) {
-      this.spinShow = true
+    getData(data) {
+      this.spinShow = true;
       Promise.all([
-      // 获取车辆档案
+        // 获取车辆档案
         getTableList({
-          tableName: 'menuTable1'
+          tableName: "menuTable1"
         }),
         // 获取会员卡
         getTableList({
-          tableName: 'menuTable2'
+          tableName: "menuTable2"
         })
-      ])
-        .then((resArr) => {
-          this.tab2data = resArr[0] || []
-          this.tab3data = resArr[1] || []
-          this.spinShow = false
-        })
+      ]).then(resArr => {
+        this.tab2data = resArr[0] || [];
+        this.tab3data = resArr[1] || [];
+        this.spinShow = false;
+      });
     },
     // 点击提交按钮
-    onOk ({ success, error }) {
+    onOk({ success, error }) {
       setTimeout(() => {
-        this.$Message.error('出现了一个异常')
-        error()
-      }, 500)
+        this.$Message.error("出现了一个异常");
+        error();
+      }, 500);
+    },
+    //标签2的复杂下拉框双击
+    tab2tableSelectOnRowDblclick(data, index) {
+      console.log(data, index);
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .main {

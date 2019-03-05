@@ -26,7 +26,7 @@ const request = function (para) {
             }
             if (resData.success) {
               // 后端返回数据正确
-              resolve(resData.data)
+              resolve(resData)
             } else {
               // 后端返回数据出现错误
               iView.Message.error(resData.msg)

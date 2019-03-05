@@ -21,6 +21,8 @@
           <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store>
           <!-- 全屏按钮 -->
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+          <!-- 刷新当前页按钮 -->
+          <refresh style="margin-right: 10px;" v-model="routerViewShow" @on-refresh="excludeStr = $event"></refresh>
         </header-bar>
       </Header>
       <Content class="main-content-con">
@@ -30,8 +32,8 @@
           </div>
           <Content class="content-wrapper">
             <!-- <keep-alive :include="cacheList"> -->
-            <keep-alive>
-              <router-view/>
+            <keep-alive :include="cacheList" :exclude="excludeStr">
+              <router-view v-if="routerViewShow"/>
             </keep-alive>
             <ABackTop :height="100" :bottom="80" :right="50" container=".content-wrapper"></ABackTop>
           </Content>
@@ -49,6 +51,7 @@ import ABackTop from './components/a-back-top'
 import Fullscreen from './components/fullscreen'
 import Language from './components/language'
 import ErrorStore from './components/error-store'
+import Refresh from './components/refresh'
 import { mapMutations, mapActions, mapGetters } from 'vuex'
 import { getNewTagList, routeEqual } from '@/libs/util'
 import routers from '@/router/routers'
@@ -65,14 +68,17 @@ export default {
     Fullscreen,
     ErrorStore,
     User,
-    ABackTop
+    ABackTop,
+    Refresh
   },
   data () {
     return {
       collapsed: false,
       minLogo,
       maxLogo,
-      isFullscreen: false
+      isFullscreen: false,
+      routerViewShow:true,
+      excludeStr:''
     }
   },
   computed: {
@@ -92,7 +98,6 @@ export default {
     },
     cacheList () {
       const list = ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
-      console.log(list)
       return list
     },
     menuList () {
@@ -158,7 +163,7 @@ export default {
     },
     handleClick (item) {
       this.turnToPage(item)
-    }
+    },
   },
   watch: {
     '$route' (newRoute) {

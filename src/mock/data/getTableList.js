@@ -1,6 +1,6 @@
 let funObj = {
     // 微信用户panel表
-    menuTable(){
+    '/WeiXinRegisterUser/GetWeiXinRegisterUserList'(){
         return  {
           "success": true,
           "data": [
@@ -1383,12 +1383,12 @@ let funObj = {
           "total": 5665
       }
     },
-    //微信用户附表1
-    menuTable1(){
+    //微信用户附表车辆档案
+    '/WeiXinRegisterUser/GetWeiXinRegisterUser1List'(){
         return { "success": true, "data": [ { "Id": 7334, "LineId": 1, "L1OpenId": "ov2NLwIVksFKXYkxP_kyt21mQL0A", "L1CarId": "7325", "L1RelationShip": "A01", "L1RelationShipDesc": null, "L1IsDefaultUsed": true, "WXDBID": null, "L1CarNum": "苏A12345", "L1VIN": "VIN12345678901234", "L1CarOwner": "测试微信号" } ], "total": 1 }
     },
-    //微信用户附表2
-    menuTable2(){
+    //微信用户附表会员卡
+    '/WeiXinRegisterUser/GetWeiXinRegisterUser2List'(){
         return { "success": true, "data": [ { "Id": 7334, "LineId": 1, "L2OpenId": "ov2NLwIVksFKXYkxP_kyt21mQL0A", "L2VipCode": "636861035922179691", "L2CarId": "7325", "L2RelationShip": "A01", "L2IsDefaultUsed": true, "L2ShowWxRecord": true, "L2ShowXfRecord": true, "L2ScoreOpt": "A01", "L2BalanceOpt": "A01", "L2ECardOpt": "A01", "L2AuthDate": "3019-02-18 16:23:59.110", "WXDBID": null, "L2CarNum": "苏A12345", "L2VIN": "VIN12345678901234", "L2CarOwner": "测试微信号" } ], "total": 1 }
     },
     // 部门定义
@@ -1398,8 +1398,9 @@ let funObj = {
 }
 export const getTableList = res =>{
     let data = JSON.parse(res.body);
-    if(funObj[data.tableName]){
-        return funObj[data.tableName](data)
+    let code = data.url;
+    if(funObj[code]){
+        return funObj[code](data)
     }else{
         return {"ErrorCode":-1,"msg":"测试接口尚未配置","success":false}
     }

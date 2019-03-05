@@ -25,8 +25,8 @@
       </div>
       <!-- 底部自定义 -->
       <div slot="footer">
-        <Button size="large" @click="winOnCancel">取消</Button>
-        <Button type="primary" size="large" :loading="winOkLoading" @click="winOnOk">提交</Button>
+        <Button @click="winOnCancel">取消</Button>
+        <Button type="primary" :loading="winOkLoading" @click="winOnOk">提交</Button>
       </div>
       <Spin size="large" fix v-if="spinShow"></Spin>
     </Modal>

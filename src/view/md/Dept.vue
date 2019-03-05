@@ -33,6 +33,7 @@ import panel from '@/components/base/panel/panel'
 import { getTableList } from '@/api/currency.js'
 // import
 export default {
+  name:'Dept',
   components: {
     winModal,
     panel
@@ -88,7 +89,7 @@ export default {
         tableName: 'deptTable',
         page
       }).then(res => {
-        this.tableData = res || []
+        this.tableData = res.data || []
         this.tableLoading = false
       })
     },

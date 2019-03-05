@@ -30,6 +30,7 @@ import { getTableList } from '@/api/currency.js'
 // import { DraggableTree } from "vue-draggable-nested-tree";
 // import
 export default {
+  name:'Menu',
   components: {
     MenuModal,
     panel
@@ -124,7 +125,7 @@ export default {
         page
       })
         .then((res) => {
-          this.tableData = res || []
+          this.tableData = res.data || []
           this.tableLoading = false
         })
     },
