@@ -1,604 +1,266 @@
 <template>
-  <!-- 菜单定义 -->
-  <div class="box">
-    <winModal v-model="winModalValue" width="800px" :spin="spinShow" @onOk="onOk">
-      <div class="body">
-        <div class="header">
-          <Row :gutter="20">
-            <!-- 第一栏 -->
-            <i-col span="3">
-              <div class="headimg"></div>
-            </i-col>
-            <!-- 第二栏 -->
-            <i-col span="7">
-              <tInput title="昵称">
-                <i-input disabled size="small" slot="con" v-model="formData.NickName"></i-input>
-              </tInput>
-              <tInput title="关注渠道">
-                <i-input disabled size="small" slot="con" v-model="formData.SubscribeDesc"></i-input>
-              </tInput>
-              <tInput title="关注来源">
-                <i-input disabled size="small" slot="con"></i-input>
-              </tInput>
-              <tInput title="OpenId">
-                <i-input disabled size="small" slot="con" v-model="formData.OpenId"></i-input>
-              </tInput>
-            </i-col>
-            <!-- 第三栏 -->
-            <i-col span="7">
-              <tInput title="原始会员卡">
-                <i-input disabled size="small" slot="con" v-model="formData.OrigVipCode"></i-input>
-              </tInput>
-              <tInput title="使用车辆">
-                <i-input disabled size="small" slot="con" v-model="formData.CarNum"></i-input>
-              </tInput>
-              <tInput title="使用VIN">
-                <i-input disabled size="small" slot="con" v-model="formData.VIN"></i-input>
-              </tInput>
-              <tInput title="使用会员卡">
-                <i-input disabled size="small" slot="con" v-model="formData.VipCode"></i-input>
-              </tInput>
-            </i-col>
-            <!-- 第四栏 -->
-            <i-col span="7">
-              <tInput title="编号">
-                <i-input disabled size="small" slot="con" v-model="formData.Id"></i-input>
-              </tInput>
-              <tInput title="关注时间">
-                <i-input disabled size="small" slot="con" v-model="formData.SubscribeDate"></i-input>
-              </tInput>
-              <tInput title="创建时间">
-                <i-input disabled size="small" slot="con" v-model="formData.CreateDate"></i-input>
-              </tInput>
-              <tInput title="认证">
-                <Checkbox slot="con" v-model="formData.IsAttest"></Checkbox>
-              </tInput>
-            </i-col>
-          </Row>
-        </div>
-        <!-- 标签页 -->
-        <div class="main">
-          <Tabs type="card">
-            <!-- 标签1 -->
-            <TabPane label="基本信息" name="tab1">
-              <Row :gutter="20">
-                <!-- 第一列 -->
-                <i-col span="8">
-                  <tInput title="姓名">
-                    <i-input size="small" slot="con" v-model="formData.CardName"></i-input>
-                  </tInput>
-                  <tInput title="性别">
-                    <i-select size="small" slot="con" v-model="formData.NSex">
-                      <Option value="男">男</Option>
-                      <Option value="女">女</Option>
-                    </i-select>
-                  </tInput>
-                  <tInput title="手机号">
-                    <i-input size="small" slot="con" v-model="formData.Phone"></i-input>
-                  </tInput>
-                  <tInput title="证件号">
-                    <i-input size="small" slot="con" v-model="formData.IDCard"></i-input>
-                  </tInput>
-                  <tInput title="出生日期">
-                    <DatePicker
-                      transfer
-                      type="date"
-                      placeholder="可根据身份证解析"
-                      size="small"
-                      slot="con"
-                      v-model="formData.BirthDate"
-                    ></DatePicker>
-                  </tInput>
-                  <tInput title="年龄">
-                    <i-input disabled placeholder="通过出生日期计算" size="small" slot="con"></i-input>
-                  </tInput>
-                  <tInput title="民族">
-                    <i-input size="small" slot="con"></i-input>
-                  </tInput>
-                </i-col>
-                <!-- 第二列 -->
-                <i-col span="8">
-                  <tInput title="类型">
-                    <i-select size="small" slot="con" v-model="formData.CardType">
-                      <Option value="A01" label="个人">
-                        <span>个人</span>
-                        <span style="float:right;color:#3892d3">A01</span>
-                      </Option>
-                      <Option value="A02" label="公司">
-                        <span>公司</span>
-                        <span style="float:right;color:#3892d3">A02</span>
-                      </Option>
-                    </i-select>
-                  </tInput>
-                  <tInput title="学历">
-                    <i-select size="small" slot="con" v-model="formData.EducationCode">
-                      <Option value="5" label="高中">
-                        <span>高中</span>
-                        <span style="float:right;color:#3892d3">5</span>
-                      </Option>
-                      <Option value="4" label="专科">
-                        <span>专科</span>
-                        <span style="float:right;color:#3892d3">4</span>
-                      </Option>
-                      <Option value="3" label="本科">
-                        <span>本科</span>
-                        <span style="float:right;color:#3892d3">3</span>
-                      </Option>
-                      <Option value="2" label="硕士">
-                        <span>硕士</span>
-                        <span style="float:right;color:#3892d3">2</span>
-                      </Option>
-                      <Option value="1" label="博士">
-                        <span>博士</span>
-                        <span style="float:right;color:#3892d3">1</span>
-                      </Option>
-                    </i-select>
-                  </tInput>
-                  <tInput title="职业">
-                    <i-input size="small" slot="con" v-model="formData.Profession"></i-input>
-                  </tInput>
-                  <tInput title="收入水平">
-                    <i-select size="small" slot="con" v-model="formData.IncomeCode">
-                      <Option value="1" label="1万以下">
-                        <span>1万以下</span>
-                        <span style="float:right;color:#3892d3">1</span>
-                      </Option>
-                      <Option value="2" label="1-3万">
-                        <span>1-3万</span>
-                        <span style="float:right;color:#3892d3">2</span>
-                      </Option>
-                      <Option value="A03" label="个体户">
-                        <span>个体户</span>
-                        <span style="float:right;color:#3892d3">A03</span>
-                      </Option>
-                    </i-select>
-                  </tInput>
-                  <tInput title="推荐人">
-                    <i-input size="small" slot="con"></i-input>
-                  </tInput>
-                </i-col>
-                <!-- 第三列 -->
-                <i-col span="8">
-                  <tInput title="婚姻状况">
-                    <i-select size="small" slot="con">
-                      <Option value="A01">已婚</Option>
-                      <Option value="A02">未婚</Option>
-                    </i-select>
-                  </tInput>
-                  <tInput title="子女描述">
-                    <i-input size="small" slot="con"></i-input>
-                  </tInput>
-                  <tInput title="子女数量">
-                    <InputNumber size="small" slot="con" style="width:100%" :min="0"></InputNumber>
-                  </tInput>
-                  <tInput title="常去商圈">
-                    <i-input size="small" slot="con"></i-input>
-                  </tInput>
-                </i-col>
-              </Row>
-              <tInput title="住址">
-                <i-input size="small" slot="con"></i-input>
-              </tInput>
-              <tInput title="备注">
-                <i-input size="small" slot="con"></i-input>
-              </tInput>
-            </TabPane>
-            <!-- 标签2 -->
-            <TabPane label="车辆档案" name="tab2">
-              <div class="header">
-                <div class="header-left">
-                  <tableSelect
-                    width="550"
-                    :config="tab2tableSelectConfig"
-                    @on-row-dblclick="tab2tableSelectOnRowDblclick"
-                  ></tableSelect>
-                  <!-- 复杂查询 -->
-                  <!-- <Poptip placement="bottom-start" trigger="focus" transfer width="auto">
-                    <i-input placeholder="请输入查询条件" style="width:150px"></i-input>
-                    <Table
-                      size="small"
-                      height="150"
-                      width="400"
-                      ref="selection"
-                      :columns="tab2inputTable"
-                      :data="[]"
-                      slot="content"
-                    ></Table>
-                  </Poptip>-->
-                  <Button>删除行</Button>
-                  <Button>新增车挡</Button>
-                  <Button>修改车挡</Button>
-                </div>
-              </div>
-              <Table
-                size="small"
-                border
-                height="250"
-                ref="selection"
-                :columns="tab2col"
-                :data="tab2data"
-              >
-                <!-- 车辆关系可编辑 -->
-                <template slot-scope="{ index }" slot="L1RelationShip">
-                  <i-select
-                    transfer
-                    size="small"
-                    slot="con"
-                    v-model="tab2data[index].L1RelationShip"
-                  >
-                    <Option value="A01">车主</Option>
-                    <Option value="A02">亲属</Option>
-                    <Option value="A03">朋友</Option>
-                    <Option value="A04">司机</Option>
-                    <Option value="A05">其他</Option>
-                  </i-select>
-                </template>
-                <!-- 默认使用 -->
-                <template slot-scope="{ index }" slot="L1IsDefaultUsed">
-                  <Checkbox slot="con" v-model="tab2data[index].L1IsDefaultUsed"></Checkbox>
-                </template>
-              </Table>
-            </TabPane>
-            <!-- 标签3 -->
-            <TabPane label="会员卡" name="tab3">
-              <div class="header">
-                <div class="header-left">
-                  <tableSelect
-                    width="700"
-                    :config="tab3tableSelectConfig"
-                    @on-row-dblclick="tab2tableSelectOnRowDblclick"
-                  ></tableSelect>
-                  <!-- 复杂查询 -->
-                  <!-- <Poptip placement="bottom-start" trigger="focus" transfer width="auto">
-                    <i-input placeholder="请输入查询条件" style="width:150px"></i-input>
-                    <Table
-                      size="small"
-                      height="150"
-                      width="700"
-                      ref="selection"
-                      :columns="tab3inputTable"
-                      :data="[]"
-                      slot="content"
-                    ></Table>
-                  </Poptip>-->
-                  <Button>删除行</Button>
-                </div>
-              </div>
-              <Table
-                size="small"
-                border
-                height="250"
-                ref="selection"
-                :columns="tab3col"
-                :data="tab3data"
-              >
-                <!-- 能查看履历 -->
-                <template slot-scope="{ index }" slot="L2ShowWxRecord">
-                  <Checkbox slot="con" v-model="tab3data[index].L2ShowWxRecord"></Checkbox>
-                </template>
-                <!-- 能查看消费 -->
-                <template slot-scope="{ index }" slot="L2ShowXfRecord">
-                  <Checkbox slot="con" v-model="tab3data[index].L2ShowXfRecord"></Checkbox>
-                </template>
-                <!-- 默认使用 -->
-                <template slot-scope="{ index }" slot="L2IsDefaultUsed">
-                  <Checkbox slot="con" v-model="tab3data[index].L2IsDefaultUsed"></Checkbox>
-                </template>
-              </Table>
-            </TabPane>
-            <!-- 标签4 -->
-            <TabPane label="专属顾问" name="tab4">
-              <div class="header">
-                <div class="header-left">
-                  <i-input placeholder="请输入查询条件" style="width:150px"></i-input>
-                  <Button>删除行</Button>
-                </div>
-              </div>
-            </TabPane>
-            <!-- 标签5 -->
-            <TabPane label="标签" name="tab5">
-              <div class="header">
-                <div class="header-left">
-                  <i-input placeholder="请输入查询条件" style="width:250px"></i-input>
-                  <Button>贴上</Button>
-                  <Button>打开标签库</Button>
-                  <Button>删除</Button>
-                </div>
-              </div>
-            </TabPane>
-            <!-- 标签6 -->
-            <TabPane label="活跃轨迹" name="tab6"></TabPane>
-          </Tabs>
-        </div>
-      </div>
-    </winModal>
-  </div>
+	<div>
+		<Form :model="formData" :rules="rules" ref="formValidate" inline :label-width="80" label-position="right">
+			<FormItem label="菜单" prop="MenuType" required>
+				<i-select style="width:100px" v-model="formData.MenuType">
+					<Option value="A01" label="菜单">
+						<span>菜单</span>
+						<span>A01</span>
+					</Option>
+					<Option value="A02" label="报表">
+						<span>报表</span>
+						<span>A02</span>
+					</Option>
+				</i-select>
+			</FormItem>
+			<FormItem label="菜单名称" prop="text" required><i-input v-model="formData.text"></i-input></FormItem>
+			<FormItem label="菜单图标" prop="iconCls" required><i-input v-model="formData.iconCls"></i-input></FormItem>
+			<FormItem label="冻结"><Checkbox v-model="formData.IsLock"></Checkbox></FormItem>
+			<FormItem label="备注"><i-input type="textarea" v-model="formData.Note"></i-input></FormItem>
+			<Divider>配置</Divider>
+			<!-- 普通配置项 -->
+			<template v-if="formData.MenuType == 'A01'">
+				<FormItem label="是否为末级"><Checkbox v-model="formData.leaf"></Checkbox></FormItem>
+				<FormItem label="域"><i-input v-model="formData.ScopeName"></i-input></FormItem>
+				<FormItem label="关联表">
+					<i-select style="width:100px" v-model="formData.SortIndex">
+						<Option value="A01" label="菜单">
+							<span>菜单</span>
+							<span>A01</span>
+						</Option>
+						<Option value="A02" label="报表">
+							<span>报表</span>
+							<span>A02</span>
+						</Option>
+					</i-select>
+				</FormItem>
+				<FormItem label="菜单ID"><i-input v-model="formData.id"></i-input></FormItem>
+			</template>
+			<template v-else-if="formData.MenuType == 'A02'">
+				<FormItem label="直接导出"><Checkbox v-model="formData.AutoExport"></Checkbox></FormItem>
+				<FormItem label="报表语句">
+					<i-input type="textarea" v-model="formData.ExecSql"></i-input>
+				</FormItem>
+			</template>
+			<!-- 表格配置项 -->
+			<Card :padding="5" title="配置表" dis-hover>
+				<template v-if="formData.MenuType == 'A01' && formData.leaf">
+					<div class="card-header">
+						<Button>增加CUD</Button>
+						<Button @click="tableData1.push({})">添加行</Button>
+					</div>
+					<Table size="small" border height="200px" :columns="columns1" :data="tableData1">
+						<template slot-scope="{index}" slot="L1Code">
+							<i-input v-model="tableData1[index].L1Code"></i-input>
+						</template>
+						<template slot-scope="{index}" slot="L1Name">
+							<i-input v-model="tableData1[index].L1Name"></i-input>
+						</template>
+						<template slot-scope="{index}" slot="L1Group">
+							<i-input v-model="tableData1[index].L1Group"></i-input>
+						</template>
+						<template slot-scope="{index}" slot="action">
+							<Button type="error" @click="tableData1.splice(index, 1)">删除</Button>
+						</template>
+					</Table>
+				</template>
+				<template v-else-if="formData.MenuType == 'A02'">
+					<div class="card-header">
+						<Button @click="tableData2.push({})">添加行</Button>
+						<Button>删除行</Button>
+					</div>
+					<Table size="small" border height="200px" :columns="columns2" :data="tableData2">
+						<template slot-scope="{ row, index }" slot="L2Type">
+							<i-select style="width:100px" v-model="tableData2[index].L2Type">
+								<Option v-for="item in tableData2L2Type" :key="item.Code" :value="item.Code" :label="item.Name">
+									<span>{{item.Name}}</span>
+									<span>({{item.Code}})</span>
+								</Option>
+							</i-select>
+						</template>
+						<template slot-scope="{ row, index }" slot="L2Code">
+							<i-input v-model="tableData2[index].L2Code"></i-input>
+						</template>
+						<template slot-scope="{ row, index }" slot="L2Name">
+							<i-input v-model="tableData2[index].L2Name"></i-input>
+						</template>
+						<template slot-scope="{ row, index }" slot="action">
+							<Button type="error" @click="tableData2.splice(index, 1)">删除</Button>
+						</template>
+					</Table>
+				</template>
+				<template v-else>
+					暂无配置表
+				</template>
+			</Card>
+			<Button :loading="buLoading" type="primary" @click="handleSubmit('formValidate')" style="margin-top: 30px;width:100px">确认</Button>
+		</Form>
+		<Spin size="large" fix v-if="spinShow"></Spin>
+	</div>
 </template>
 
 <script>
-import winModalMixin from "@/components/base/panel/winModalMixin.js";
-import { tInput, tableSelect } from "@/components/base";
-import { getTableList } from "@/api/currency.js";
+import { getTableList } from '@/api/currency';
 export default {
-  mixins: [winModalMixin],
-  components: {
-    tInput,
-    tableSelect
-  },
-  data() {
-    return {
-      // 主数据
-      formData: {},
-      // madel加载
-      spinShow: false,
-      //车辆档案中复杂查询框配置
-      tab2tableSelectConfig: {
-        columns: [
-          {
-            title: "车牌号",
-            key: "CarNum",
-            tooltip: true,
-            width: 100
-          },
-          {
-            title: "VIN",
-            key: "VIN",
-            tooltip: true,
-            width: 170
-          },
-          {
-            key: "CardName",
-            tooltip: true,
-            title: "车主"
-          },
-          {
-            title: "会员卡",
-            tooltip: true,
-            key: "VipCode",
-            width: 160
-          }
-        ],
-        data: {
-          scopeName: "wx",
-          docName: "WeiXinRegisterUser",
-          codeName: "WeiXinRegisterUserCar",
-          needTotal: true
-        }
-      },
-      //会员卡中复杂查询框配置
-      tab3tableSelectConfig: {
-        columns: [
-          {
-            title: "会员卡",
-            key:'VipCode',
-            width: 160
-          },
-          {
-            title: "客户名称",
-            key:'CardName',
-          },
-          {
-            title: "手机号",
-            key:'Phone',
-          },
-          {
-            title: "车牌号",
-            key:'CarNum',
-          },
-          {
-            title: "VIN",
-            key:'VIN',
-            width: 170
-          }
-        ],
-        data: {
-          scopeName: "wx",
-          docName: "WeiXinRegisterUser",
-          codeName: "WeiXinRegisterVipCode",
-          needTotal: true
-        }
-      },
-      // 标签2表格列项
-      tab2col: [
-        {
-          type: "selection",
-          width: 60,
-          align: "center"
-        },
-        {
-          title: "车牌号",
-          key: "L1CarNum",
-          width: "110px"
-        },
-        {
-          title: "VIN",
-          key: "L1VIN",
-          width: "220px"
-        },
-        {
-          title: "车辆关系",
-          // key:'L1RelationShip',
-          slot: "L1RelationShip"
-        },
-        {
-          title: "车主",
-          key: "L1CarOwner"
-        },
-        {
-          title: "默认使用",
-          width: "90px",
-          align: "center",
-          slot: "L1IsDefaultUsed"
-        }
-      ],
-      // 标签3表格列项
-      tab3col: [
-        {
-          type: "selection",
-          width: 60,
-          align: "center",
-          fixed: "left"
-        },
-        {
-          title: "会员卡",
-          width: "170px",
-          key: "L2VipCode"
-          // fixed: "left"
-        },
-        {
-          title: "会员卡关系",
-          key: "L2RelationShip",
-          width: "100px"
-        },
-        {
-          title: "车牌号",
-          key: "L2CarNum",
-          tooltip: true,
-          width: "120px"
-        },
-        {
-          title: "VIN",
-          key: "L2VIN",
-          tooltip: true,
-          width: "160px"
-        },
-        {
-          title: "车主",
-          key: "L2CarOwner",
-          tooltip: true,
-          width: "100px"
-        },
-        {
-          title: "能查看履历",
-          slot: "L2ShowWxRecord",
-          width: "100px",
-          align: "center"
-        },
-        {
-          title: "积分权限",
-          key: "L2BalanceOpt",
-          width: "100px"
-        },
-        {
-          title: "储值权限",
-          key: "L2ScoreOpt",
-          width: "100px"
-        },
-        {
-          title: "卡券权限",
-          key: "L2ECardOpt",
-          width: "100px"
-        },
-        {
-          title: "能查看消费",
-          slot: "L2ShowXfRecord",
-          width: "100px",
-          align: "center"
-        },
-        {
-          title: "授权截至",
-          key: "L2AuthDate",
-          tooltip: true,
-          minWidth: 150
-        },
-        {
-          title: "默认使用",
-          width: "90px",
-          slot: "L2IsDefaultUsed",
-          align: "center"
-        }
-      ],
-
-      // 标签2表格数据
-      tab2data: [],
-      // 标签3表格数据
-      tab3data: []
-    };
-  },
-  methods: {
-    /**
-     * 获取相关的附表数据
-     */
-    getData(data) {
-      this.spinShow = true;
-      Promise.all([
-        // 获取车辆档案
-        getTableList({
-          tableName: "menuTable1"
-        }),
-        // 获取会员卡
-        getTableList({
-          tableName: "menuTable2"
-        })
-      ]).then(resArr => {
-        this.tab2data = resArr[0] || [];
-        this.tab3data = resArr[1] || [];
-        this.spinShow = false;
-      });
-    },
-    // 点击提交按钮
-    onOk({ success, error }) {
-      setTimeout(() => {
-        this.$Message.error("出现了一个异常");
-        error();
-      }, 500);
-    },
-    //标签2的复杂下拉框双击
-    tab2tableSelectOnRowDblclick(data, index) {
-      console.log(data, index);
-    }
-  }
+	name: 'MenuModal',
+	props: {
+		//传递的数据
+		data: {
+			type: Object
+		}
+	},
+	watch: {
+		data(val) {
+			//当传递的数据为空的时候
+			if (val._isEmpty) {
+				//当传递数据为空对象的时候自动恢复到默认值
+				Object.assign(this.$data, this.$options.data());
+			} else {
+				//将数据赋值到表单中
+				this.formData = val;
+				//开启页面loading
+				this.spinShow = true;
+				Promise.all([
+					getTableList({
+						url: '/Menu/GetMenu1List'
+					}),
+					getTableList({
+						url: '/Menu/GetMenu2List'
+					})
+				])
+					.then((resArr)=>{
+						//并且获取附表 可操控控件配置
+						this.tableData1 = resArr[0].data;
+						//并且获取附表 可操控控件配置
+						this.tableData2 = resArr[1].data;
+						console.log(resArr[1].data);
+						this.spinShow = false;
+					})
+			}
+		}
+	},
+	data() {
+		return {
+			formData: {
+				MenuType: 'A01',
+				leaf: false
+			},
+			// 表单验证
+			rules:{
+				MenuType: [
+					{ required: true, message: '菜单为必填项' }
+				],
+				text: [
+					{ required: true, message: '菜单名称为必填项' }
+				],
+				iconCls: [
+					{ required: true, message: '菜单图标为必填项' }
+				]
+			},
+			modalValue: this.value,
+			columns1: [
+				{
+					type: 'selection',
+					width: 60,
+					align: 'center'
+				},
+				{
+					title: '选择器',
+					slot: 'L1Code',
+					width: '350px'
+				},
+				{
+					title: '名称',
+					slot: 'L1Name'
+				},
+				{
+					title: '组',
+					slot: 'L1Group'
+				},
+				{
+					title: '操作',
+					slot: 'action',
+					width: 100,
+					align: 'center'
+				}
+			],
+			columns2: [
+				{
+					type: 'selection',
+					width: 60,
+					align: 'center'
+				},
+				{
+					title: '参数类型',
+					slot: 'L2Type',
+					width: '150px'
+				},
+				{
+					title: '参数编码',
+					slot: 'L2Code',
+					width: '150px'
+				},
+				{
+					title: '参数名称',
+					slot: 'L2Name',
+					width: '150px'
+				},
+				{
+					title: '选项语句',
+					key: 'L2Sql'
+				},
+				{
+					title: '操作',
+					slot: 'action',
+					width: 100,
+					align: 'center'
+				}
+			],
+			tableData1: [],
+			tableData2: [],
+			//表1中选中选项
+			tableData1ChangeList:[],
+			//表2中选中选项
+			tableData2ChangeList:[],
+			tableData2L2Type:[
+				{Code:'text',Name:'字符'},
+				{Code:'number',Name:'数字'},
+				{Code:'date',Name:'日期'},
+				{Code:'combobox',Name:'下拉框'},
+				{Code:'mcombobox',Name:'多选框'},
+				{Code:'checkbox',Name:'单选框'},
+			],
+			buLoading:false,
+			spinShow:false
+		};
+	},
+	methods: {
+		//表单提交
+		handleSubmit(formName){
+			console.log(formName);
+			this.$refs[formName].validate((valid)=>{
+				if(valid){
+					this.buLoading = true;
+					setTimeout(()=>{
+						console.log(this.formData,this.tableData1,this.tableData2)
+						this.$Message.success('操作成功');
+						this.buLoading = false;
+					},500)
+				}
+			})
+		},
+		// 配置表1删除
+		tableData1del(){
+			console.log(this.tableData1ChangeList);
+		}
+	}
 };
 </script>
 <style lang="less" scoped>
-.main {
-  margin-top: 10px;
-}
-
-.header {
-  margin-top: -5px;
-  padding-bottom: 7px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  .header-left {
-    display: flex;
-    align-items: center;
-    > button,
-    div {
-      margin-right: 5px;
-    }
-  }
-}
-.upload-box {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.main {
-  position: relative;
-  &::after {
-    content: "";
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 99;
-    background-color: rgba(0, 0, 0, 0);
-    height: 0px;
-    transition: 0.2s;
-  }
-}
-.main-none {
-  position: relative;
-  &::after {
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-}
-// 头像
-.headimg {
-  width: 85px;
-  height: 85px;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+.card-header {
+	padding-bottom: 5px;
+	> button {
+		margin-right: 10px;
+	}
 }
 </style>

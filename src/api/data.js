@@ -1,51 +1,65 @@
 import request from '@/libs/api.request'
 
-export const getTableData = () => {
+/**
+ * 获取菜单定义表
+ */
+export const getMenuList = ({query=''}={}) => {
   return request({
-    url: 'get_table_data',
-    method: 'get'
+    url: '/Home/GetMenuList',
+		data:{
+			query
+		},
+    method: 'post',
+    root:true
   })
 }
 
-export const getDragList = () => {
-  return request({
-    url: 'get_drag_list',
-    method: 'get'
-  })
-}
+// export const getTableData = () => {
+//   return request({
+//     url: 'get_table_data',
+//     method: 'get'
+//   })
+// }
 
-export const errorReq = () => {
-  return request({
-    url: 'error_url',
-    method: 'post'
-  })
-}
+// export const getDragList = () => {
+//   return request({
+//     url: 'get_drag_list',
+//     method: 'get'
+//   })
+// }
 
-export const saveErrorLogger = info => {
-  return request({
-    url: 'save_error_logger',
-    data: info,
-    method: 'post'
-  })
-}
+// export const errorReq = () => {
+//   return request({
+//     url: 'error_url',
+//     method: 'post'
+//   })
+// }
 
-export const uploadImg = formData => {
-  return request({
-    url: 'image/upload',
-    data: formData
-  })
-}
+// export const saveErrorLogger = info => {
+//   return request({
+//     url: 'save_error_logger',
+//     data: info,
+//     method: 'post'
+//   })
+// }
 
-export const getOrgData = () => {
-  return request({
-    url: 'get_org_data',
-    method: 'get'
-  })
-}
+// export const uploadImg = formData => {
+//   return request({
+//     url: 'image/upload',
+//     data: formData
+//   })
+// }
 
-export const getTreeSelectData = () => {
-  return request({
-    url: 'get_tree_select_data',
-    method: 'get'
-  })
-}
+// export const getOrgData = () => {
+//   return request({
+//     url: 'get_org_data',
+//     method: 'get'
+//   })
+// }
+
+// export const getTreeSelectData = () => {
+//   return request({
+//     url: 'get_tree_select_data',
+//     method: 'get'
+//   })
+// }

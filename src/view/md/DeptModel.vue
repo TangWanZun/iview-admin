@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+    <div class="box">
     <winModal width="300px" v-model="winModalValue" :spin="spinShow">
       <tInput title="部门编码">
         <i-input disabled size="small" slot="con" v-model="formData.Code"></i-input>
@@ -12,8 +12,7 @@
       </tInput>
     </winModal>
   </div>
-</template >
-
+</template>
 <script>
 import winModalMixin from "@/components/base/panel/winModalMixin.js";
 import { tInput } from "@/components/base";
@@ -35,8 +34,7 @@ export default {
     /**
      * 获取相关的附表数据
      */
-    getData(data) {
-    }
+    getData(data) {}
   }
 };
 </script>

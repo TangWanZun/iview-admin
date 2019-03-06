@@ -1,148 +1,218 @@
 <template>
-  <!-- 菜单定义 -->
-  <div class="box">
-    <panel v-model="addWindow">
-      <template slot="left">
-        <i-input placeholder="请输入查询条件" class="header-left-input"></i-input>
-        <Button @click="test=!test">查询</Button>
-        <Button @click="addClick">新增</Button>
-        <Button>删除</Button>
-        <Button icon="ios-download">保存排序</Button>
-      </template>
-      <template slot="right">
-        <Button type="info">构建模板</Button>
-      </template>
-      <!-- <DraggableTree></DraggableTree> -->
-    </panel>
-    <!-- 菜单定义新增 -->
-    <MenuModal
-    ref="winModal"
-    :data="winData"
-    v-model="addWindow"
-    ></MenuModal>
-  </div>
+	<!-- 菜单定义 -->
+	<div class="box">
+		<div class="head-tbn">
+			<i-input style="width:150px" v-model="inputValue" placeholder="请输入查询值"></i-input>
+			<Button @click="getData()">查询</Button>
+			<Button @click="addTreenItem">新增</Button>
+			<Button @click="sendTreen">保存排序</Button>
+		</div>
+		<div class="body">
+			<div class="flex-left" style="width:360px">
+				<Card  title="菜单">
+					<DraggableTree :data="treeData" draggable>
+						<div slot-scope="{ data, store }">
+							<template v-if="!data.isDragPlaceHolder">
+								<div class="tree-item">
+									<div
+										v-if="data.children &amp;&amp; data.children.length"
+										@click="store.toggleOpen(data)"
+										class="tree-icon"
+										:class="{ 'tree-icon-open': data.open }"
+									>
+										<Icon type="ios-arrow-down" />
+									</div>
+									<div class="tree-item-text">{{ data.text }}</div>
+									<div class="tree-item-button">
+										<!-- 新增 -->
+<!-- 										<Icon
+											v-if="data.parentId=='root'"
+											type="md-add"
+											@click="menuModalData = data"
+										/> -->
+										<!-- 删除 -->
+										<Icon v-if="data.children&&data.children.length==0" type="md-trash" @click="deleteTreenItem(data,store)" />
+										<!-- 设置 -->
+										<Icon type="md-settings" @click="menuModalData = data" />
+									</div>
+								</div>
+							</template>
+						</div>
+					</DraggableTree>
+					<Spin size="large" fix v-if="spinShow"></Spin>
+				</Card>
+			</div>
+			<div class="flex-right">
+				<Card :title="rightCard"><MenuModal :data="menuModalData"></MenuModal></Card>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
-import MenuModal from './MenuModal'
-import panel from '@/components/base/panel/panel'
-import { getTableList } from '@/api/currency.js'
-// import { DraggableTree } from "vue-draggable-nested-tree";
+import MenuModal from './MenuModal';
+import { panel } from '@/components/base';
+import { getTableList } from '@/api/currency.js';
+import { DraggableTree } from 'vue-draggable-nested-tree';
+import { getMenuList } from '@/api/data';
 // import
 export default {
-  name:'Menu',
-  components: {
-    MenuModal,
-    panel
-  },
-  data () {
-    return {
-      // 显示新增菜单定义框
-      addWindow: false,
-      // loding
-      tableLoading: true,
-      winData: {},
-      tableColumns: [
-        {
-          type: 'index',
-          width: 60,
-          align: 'center',
-          key: 'Rown'
-        },
-        {
-          title: '注册/关注时间',
-          key: 'NCreateDate',
-          tooltip: true
-        },
-        {
-          title: '昵称',
-          key: 'NickName',
-          width: 150,
-          tooltip: true
-        },
-        {
-          title: '姓名',
-          key: 'CardName',
-          width: 100
-        },
-        {
-          title: '注册',
-          width: 60
-        },
-        {
-          title: '认证',
-          width: 60
-        },
-        {
-          title: '性别',
-          key: 'Sex',
-          width: 60
-        },
-        {
-          title: '手机号',
-          key: 'Phone',
-          width: 110
-        },
-        {
-          title: '车牌号',
-          key: 'CarNum',
-          tooltip: true,
-          width: 100
-        },
-        {
-          title: 'VIN',
-          key: 'VIN',
-          width: 175
-        },
-        {
-          title: '车型',
-          key: 'CarStyleName',
-          tooltip: true
-        },
-        {
-          title: '归属公司',
-          key: 'CmpName',
-          tooltip: true
-        }
-      ],
-      // 表数据
-      tableData: [],
-      test: true
-    }
-  },
-  created () {
-    this.getData()
-  },
-  methods: {
-    /**
-     * 获取当前数据
-     */
-    getData (page = 1) {
-      this.tableData = []
-      this.tableLoading = true
-      getTableList({
-        tableName: 'menuTable',
-        page
-      })
-        .then((res) => {
-          this.tableData = res.data || []
-          this.tableLoading = false
-        })
-    },
-    /**
-     * 添加一个菜单
-     */
-    addClick () {
-      this.$refs.winModal.show()
-    },
-    /**
-     * 双击用户表列项
-     */
-    rowDblclick (data) {
-      this.$refs.winModal.show(data)
-    }
-  }
-}
+	name: 'Menu',
+	components: {
+		MenuModal,
+		panel,
+		DraggableTree
+	},
+	data() {
+		return {
+			// 显示新增菜单定义框
+			addWindow: false,
+			// loding
+			spinShow: true,
+			treeData: [],
+			rightCard: '编辑',
+			//列表默认值
+			menuModalData: {},
+			//查询值
+			inputValue:''
+		};
+	},
+	created() {
+		this.getData();
+	},
+	methods: {
+		/**
+		 * 获取数据
+		 */
+		getData(){
+			this.spinShow = true;
+			getMenuList({
+				query:this.inputValue
+			}).then(res => {
+				this.treeData = res.children;
+				this.spinShow = false;
+			});
+		},
+		/**
+		 * 添加一个菜单
+		 */
+		addClick() {
+			this.$refs.winModal.show();
+		},
+		/**
+		 * 双击用户表列项
+		 */
+		rowDblclick(data) {
+			this.$refs.winModal.show(data);
+		},
+		/**
+		 * 新增节点
+		 */
+		addTreenItem(){
+			this.menuModalData = {
+				_isEmpty:true
+			}
+		},
+		/**
+		 * 删除节点
+		 */
+		deleteTreenItem(data) {
+			console.log(data)
+		},
+		/**
+		 * 保存排序
+		 */
+		sendTreen(){
+			setTimeout(()=>{
+				this.$Message.success('保存排序成功')
+			},500)
+		}
+	}
+};
 </script>
 <style lang="less" scoped>
+.box {
+	height: 100%;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+}
+.head-tbn {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	flex-shrink: 0;
+	display: flex;
+	> div,
+	button {
+		margin-right: 5px;
+	}
+	padding:5px;
+}
+.body {
+	padding:10px;
+	flex-grow: 1;
+	display: flex;
+	align-items: stretch;
+	.flex-left{
+		flex-shrink:0;
+		min-height: 100%;
+		overflow-y: auto;
+		overflow-x:visible;
+	}
+	.flex-right {
+		margin-left: 10px;
+		flex-grow: 1;
+	}
+}
+.he-tree {
+	border: 1px solid #ccc;
+	padding: 20px;
+}
+.tree-item {
+	cursor: default;
+	user-select: none;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	transition: 0.2s;
+	border-radius: 3px;
+	padding: 5px 3px;
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+}
+//控制父元素前面的icon
+.tree-icon {
+	transition: 0.3s;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+//父元素打开的时候
+.tree-icon-open {
+	transform: rotate(-180deg);
+}
+//单项内容
+.tree-item-text {
+	flex-grow: 1;
+	text-align: left;
+}
+//单项按钮处
+.tree-item-button {
+	flex-shrink: 0;
+	> i {
+		cursor: pointer;
+		transition: 0.3s;
+		margin-left: 5px;
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.3);
+		}
+	}
+}
+</style>
+<style lang="less">
+@import '../../index.less';
+.draggable-placeholder {
+	border: 2px dotted fade(@main-color, 50%);
+	background-color: fade(@main-color, 5%);
+	border-radius: 3px;
+}
 </style>

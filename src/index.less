@@ -1,31 +1,36 @@
 @import '~iview/src/styles/index.less';
-
 @menu-dark-title: #001529;
 @menu-dark-active-bg: #000c17;
 @layout-sider-background: #001529;
 
 /**
+*  相对变量
+*/
+@main-color:#2D8cF0;
+/**
 * 滚动条修改
 */
-*{
-&::-webkit-scrollbar {
-    width: 5px;
-    height: 8px;
-    background: white;
-}
-&::-webkit-scrollbar-corner, /* 滚动条角落 */
-&::-webkit-scrollbar-thumb,
-&::-webkit-scrollbar-track {
-    border-radius: 4px;
-}
-&::-webkit-scrollbar-corner,
-&::-webkit-scrollbar-track {
-    /* 滚动条轨道 */
-    background-color: rgba(180, 160, 120, 0.1);
-    box-shadow: inset 0 0 1px rgba(180, 160, 120, 0.5);
-}
-&::-webkit-scrollbar-thumb {
-    /* 滚动条手柄 */
-    background-color:#2D8cF0;
-}
+
+* {
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 8px;
+        background: white;
+    }
+    &::-webkit-scrollbar-corner,
+    /* 滚动条角落 */
+    &::-webkit-scrollbar-thumb,
+    &::-webkit-scrollbar-track {
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-corner,
+    &::-webkit-scrollbar-track {
+        /* 滚动条轨道 */
+        background-color: rgba(180, 160, 120, 0.1);
+        box-shadow: inset 0 0 1px rgba(180, 160, 120, 0.5);
+    }
+    &::-webkit-scrollbar-thumb {
+        /* 滚动条手柄 */
+        background-color: @main-color;
+    }
 }
