@@ -11,7 +11,7 @@ import winModalMixin from "@/components/base/panel/winModalMixin.js";
 import { tInput, tableSelect } from "@/components/base";
 import { getTableList } from "@/api/currency.js";
 export default {
-  name:'WeiXinRegisterUserModal',
+  name:'RolesModal',
   mixins: [winModalMixin],
   components: {
     tInput,
@@ -21,6 +21,7 @@ export default {
     return {
       // 主数据
       formData: {},
+			spinShow:false,
     };
   },
   methods: {

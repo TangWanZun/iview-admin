@@ -17,7 +17,25 @@ export default [
           icon: 'md-notifications'
         },
         component: () => import('@/view/sm/Menu')
-      }
+      },
+			{
+			  path: 'Roles',
+			  name: 'Roles',
+			  meta: {
+			    title: '角色定义',
+			    icon: 'md-notifications'
+			  },
+			  component: () => import('@/view/sm/Roles')
+			},
+			{
+			  path: 'Ousr',
+			  name: 'Ousr',
+			  meta: {
+			    title: '账号管理',
+			    icon: 'md-notifications'
+			  },
+			  component: () => import('@/view/sm/Ousr')
+			}
     ]
   }
 ]

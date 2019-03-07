@@ -17,6 +17,7 @@
       <Page
         @on-change="getData({page:$event})"
         :total="tableTotal"
+				:page-size="pageSize"
         :simple="simple"
         show-elevator
       />
@@ -54,7 +55,8 @@ export default {
       //数据
       tableData: [],
       //其他属性
-      data: this.config.data
+      data: this.config.data,
+			pageSize:25
     };
   },
   mounted() {
@@ -65,7 +67,7 @@ export default {
       this.tableLoad = true;
       let meData = this.data;
       meData.page = page;
-      console.log(meData);
+			meData.limit = this.pageSize;
       getTableList(meData).then(res => {
         this.tableData = res.data;
         this.tableTotal = res.total;
@@ -74,7 +76,7 @@ export default {
     },
     //双击某一行的时候触发
     onRowDblclick(data, index) {
-      this.$emit("on-row-dblclick", data, index);
+      this.$emit("on-row-dblclick", this.tableData[index], index);
     }
   }
 };

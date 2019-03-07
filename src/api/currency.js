@@ -9,7 +9,8 @@ import request from '@/libs/api.request'
 export const getTableList = ({
   // 表名
   url,
-  page=1
+  page=1,
+	limit=25
 }={}) => {
   return request({
     //这里为了测试方便统一使用一个url
@@ -19,7 +20,7 @@ export const getTableList = ({
       url:url,
       page: page,
       start: 0,
-      limit: 25
+      limit: limit
     },
     method: 'post'
   })

@@ -133,7 +133,7 @@ export default {
     searchPlace: {
       type: String,
       default: 'top'
-    }
+    },
   },
   /**
    * Events
@@ -159,7 +159,9 @@ export default {
             params: params,
             value: this.insideTableData[params.index][params.column.key],
             edittingCellId: this.edittingCellId,
-            editable: this.editable
+            editable: this.editable,
+						editype:this.editype,
+						ediconfig:this.ediconfig
           },
           on: {
             'input': val => {

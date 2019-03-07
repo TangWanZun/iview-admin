@@ -112,9 +112,9 @@ export default {
         // 这里延时300毫秒，是为了展现modal框关闭动画
         setTimeout(() => {
           // 将组件恢复到初始状态
-          // Object.assign(this.$data,this.$options.data())
+          Object.assign(this.$data,this.$options.data())
           // 组件销毁
-          _this.modalValue = false
+          // _this.modalValue = false
         }, 300)
       })
       // this.$emit('onCancel');
