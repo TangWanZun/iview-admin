@@ -3,8 +3,8 @@
   <div class="box">
     <panel v-model="addWindow">
       <template slot="left">
-        <i-input placeholder="请输入查询条件" class="header-left-input"></i-input>
-        <Button>查询</Button>
+        <i-input v-model="pageTableConfig.data.query" @on-enter="serechData" placeholder="请输入查询条件" class="header-left-input"></i-input>
+        <Button @click="serechData">查询</Button>
         <Button @click="addClick">新增</Button>
         <Button>删除</Button>
         <Button icon="ios-download">保存排序</Button>
@@ -12,65 +12,110 @@
       <template slot="right">
         <Button type="info">构建模板</Button>
       </template>
-      <div>
-        <Table
-          stripe
-          :loading="tableLoading"
-          size="small"
-          :columns="tableColumns"
-          :data="tableData"
-          @on-row-dblclick="rowDblclick"
-        ></Table>
-      </div>
-      <template slot="foot">
-        <Page :total="100" show-elevator/>
-      </template>
+      <pageTable ref="pageTable" :config="pageTableConfig"  @on-row-dblclick="rowDblclick"></pageTable>
     </panel>
     <!-- 菜单定义新增 -->
-    <win-modal ref="winModal" :data="winData" v-model="addWindow"></win-modal>
+    <winModal ref="winModal" :data="winData" v-model="addWindow"></winModal>
   </div>
 </template>
 
 <script>
-import winModal from "./baseModal";
-import panel from "@/components/base/panel/panel";
+import winModal from "./OusrModal";
+import { pageTable,panel } from "@/components/base";
 import { getTableList } from "@/api/currency.js";
 // import
 export default {
+  name: "WeiXinRegisterUser",
   components: {
     winModal,
-    panel
+    panel,
+    pageTable
   },
   data() {
     return {
-      //显示新增菜单定义框
+      // 显示新增菜单定义框
       addWindow: false,
-      //loding
+      // loding
       tableLoading: true,
       winData: {},
-      tableColumns: [],
-      //表数据
-      tableData: [],
+      pageTableConfig: {
+        columns: [
+          {
+            type: "index",
+            width: 60,
+            align: "center",
+            key: "Rown"
+          },
+          {
+            title: "注册/关注时间",
+            key: "NCreateDate",
+            tooltip: true
+          },
+          {
+            title: "昵称",
+            key: "NickName",
+            width: 150,
+            tooltip: true
+          },
+          {
+            title: "姓名",
+            key: "CardName",
+            width: 100
+          },
+          {
+            title: "注册",
+            width: 60
+          },
+          {
+            title: "认证",
+            width: 60
+          },
+          {
+            title: "性别",
+            key: "Sex",
+            width: 60
+          },
+          {
+            title: "手机号",
+            key: "Phone",
+            width: 110
+          },
+          {
+            title: "车牌号",
+            key: "CarNum",
+            tooltip: true,
+            width: 100
+          },
+          {
+            title: "VIN",
+            key: "VIN",
+            width: 175
+          },
+          {
+            title: "车型",
+            key: "CarStyleName",
+            tooltip: true
+          },
+          {
+            title: "归属公司",
+            key: "CmpName",
+            tooltip: true
+          }
+        ],
+        data:{
+          url:'/WeiXinRegisterUser/GetWeiXinRegisterUserList',
+          query:''
+        }
+      },
       test: true
     };
   },
-  created() {
-    this.getData();
-  },
   methods: {
     /**
-     * 获取当前数据
+     * 查询
      */
-    getData(page = 1) {
-      this.tableData = [];
-      this.tableLoading = true;
-      getTableList({
-        tableName: "menuTable",
-        page
-      }).then(res => {
-        this.tableData = res.data.data || [];
-        this.tableLoading = false;
-      });
+    serechData(){
+      this.$refs.pageTable.getData();
     },
     /**
      * 添加一个菜单
@@ -89,6 +134,3 @@ export default {
 </script>
 <style lang="less" scoped>
 </style>
-
-
-
