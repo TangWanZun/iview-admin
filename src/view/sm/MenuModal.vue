@@ -43,33 +43,23 @@
 				</FormItem>
 			</template>
 			<!-- 表格配置项 -->
-			<Card :padding="5" title="配置表" dis-hover>
+			<Card :padding="5" title="配置表" dis-hover style="max-width:100%">
 				<template v-if="formData.MenuType == 'A01' && formData.leaf">
 					<div class="card-header">
 						<Button>增加CUD</Button>
 						<Button @click="tableData1.push({})">添加行</Button>
 					</div>
-					<Table size="small" border height="200px" :columns="columns1" :data="tableData1">
-						<template slot-scope="{index}" slot="L1Code">
-							<i-input v-model="tableData1[index].L1Code"></i-input>
-						</template>
-						<template slot-scope="{index}" slot="L1Name">
-							<i-input v-model="tableData1[index].L1Name"></i-input>
-						</template>
-						<template slot-scope="{index}" slot="L1Group">
-							<i-input v-model="tableData1[index].L1Group"></i-input>
-						</template>
-						<template slot-scope="{index}" slot="action">
-							<Button type="error" @click="tableData1.splice(index, 1)">删除</Button>
-						</template>
-					</Table>
+					<tables size="small" border height="200" :columns="columns1" v-model="tableData1">
+					</tables>
 				</template>
 				<template v-else-if="formData.MenuType == 'A02'">
 					<div class="card-header">
 						<Button @click="tableData2.push({})">添加行</Button>
 						<Button>删除行</Button>
 					</div>
-					<Table size="small" border height="200px" :columns="columns2" :data="tableData2">
+					<tables size="small" border height="200" :columns="columns2" v-model="tableData2">
+					</tables>
+					<!-- <Table size="small" border height="200px" :columns="columns2" :data="tableData2">
 						<template slot-scope="{ row, index }" slot="L2Type">
 							<i-select style="width:100px" v-model="tableData2[index].L2Type">
 								<Option v-for="item in tableData2L2Type" :key="item.Code" :value="item.Code" :label="item.Name">
@@ -87,7 +77,7 @@
 						<template slot-scope="{ row, index }" slot="action">
 							<Button type="error" @click="tableData2.splice(index, 1)">删除</Button>
 						</template>
-					</Table>
+					</Table> -->
 				</template>
 				<template v-else>
 					暂无配置表
@@ -101,8 +91,13 @@
 
 <script>
 import { getTableList } from '@/api/currency';
+import tables from '_c/tables';
+import selectRender from '_c/render/select'
 export default {
 	name: 'MenuModal',
+	components:{
+		tables
+	},
 	props: {
 		//传递的数据
 		data: {
@@ -166,20 +161,24 @@ export default {
 				},
 				{
 					title: '选择器',
-					slot: 'L1Code',
+					key: 'L1Code',
+					editable:true,
 					width: '350px'
 				},
 				{
 					title: '名称',
-					slot: 'L1Name'
+					editable:true,
+					key: 'L1Name'
 				},
 				{
 					title: '组',
-					slot: 'L1Group'
+					editable:true,
+					key: 'L1Group'
 				},
 				{
 					title: '操作',
-					slot: 'action',
+					key:'handle',
+					options: ['delete'],
 					width: 100,
 					align: 'center'
 				}
@@ -192,26 +191,53 @@ export default {
 				},
 				{
 					title: '参数类型',
-					slot: 'L2Type',
+					render:selectRender(this,{
+						key:'L2Type',
+						keyName:'tableData2',
+						dataName:'tableData2L2Type'
+					}),
 					width: '150px'
 				},
 				{
 					title: '参数编码',
-					slot: 'L2Code',
+					key: 'L2Code',
+					editable:true,
 					width: '150px'
 				},
 				{
 					title: '参数名称',
-					slot: 'L2Name',
+					key: 'L2Name',
+					editable:true,
 					width: '150px'
 				},
 				{
 					title: '选项语句',
+					minWidth:120,
 					key: 'L2Sql'
 				},
 				{
+					title: '默认值',
+					editable:true,
+					minWidth:100,
+					key: 'L2Default'
+				},
+				{
+					title: '必填',
+					editable:true,
+					width: 80,
+					key: 'L2Required1'
+				},
+				{
+					title: '可视',
+					editable:true,
+					width: 80,
+					key: 'L2Visible1'
+				},
+				{
+					fixed:'right',
 					title: '操作',
-					slot: 'action',
+					key:'handle',
+					options: ['delete'],
 					width: 100,
 					align: 'center'
 				}

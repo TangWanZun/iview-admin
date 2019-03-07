@@ -159,6 +159,8 @@ export default {
 		overflow-x:visible;
 	}
 	.flex-right {
+		min-height: 100%;
+		overflow: auto;
 		margin-left: 10px;
 		flex-grow: 1;
 	}
