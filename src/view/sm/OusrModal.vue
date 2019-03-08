@@ -1,127 +1,157 @@
 <template>
-  <!-- 菜单定义 -->
-  <div class="box">
-    <winModal v-model="winModalValue" width="500px" :spin="spinShow" @onOk="onOk">
+	<!-- 菜单定义 -->
+	<div class="box">
+		<winModal v-model="winModalValue" width="500px" :spin="spinShow" @onOk="onOk">
 			<Form :label-width="80" label-position="left" class="form">
-				<FormItem class="form-item" label="账号">
-					<i-input disabled placeholder="自动生成"></i-input>
+				<FormItem label="账号">
+					<i-input disabled placeholder="自动生成" v-model="formData.UserCode"></i-input>
 				</FormItem>
-				<FormItem class="form-item"  label="账号别名">
-					<i-input></i-input>
-				</FormItem>
-				<FormItem class="form-item" label="关联员工">
-				</FormItem>
-				<div class="main">
+				<FormItem label="账号别名" v-model="formData.UserCodeAlias"><i-input></i-input></FormItem>
+				<FormItem v-if="formData.EmpName" label="关联员工">{{ formData.EmpName }}</FormItem>
+				<div style="margin-bottom: 10px;">
 					<Tabs type="card">
 						<TabPane label="归属角色" name="tab1">
-							<div class="header">
-							  <div class="header-left">
-							    <Button>添加行</Button>
-							    <Button>删除行</Button>
-							  </div>
-							</div>
-							<Table
-							  size="small"
-							  border
-							  height="200"
-							  ref="selection"
-							  :columns="tab1col"
-							  :data="tab1data"
+							<div style="margin-top: -15px;"></div>
+							<tables
+								size="small"
+								border
+								height="200"
+								ref="table1"
+								:columns="tab1col"
+								v-model="tab1data"
+								@on-selection-change="tab1select = $event"
 							>
-							</Table>
+								<div slot="header" class="header">
+									<Cascader :data="cascaderData" size="small"></Cascader>
+									<Button size="small" type="success">添加行</Button>
+									<Button size="small" type="error" @click="$refs.table1.deleteRow()">
+										删除行
+									</Button>
+								</div>
+							</tables>
 						</TabPane>
-						<TabPane label="绑定微信" name="tab2">
-						</TabPane>
+						<TabPane label="绑定微信" name="tab2"></TabPane>
 					</Tabs>
 				</div>
-				
+				<FormItem v-if="formData.EmpName" label="备注">
+					<i-input v-model="formData.Note" type="textarea"></i-input>
+				</FormItem>
 			</Form>
-    </winModal>
-  </div>
+		</winModal>
+	</div>
 </template>
 
 <script>
-import winModalMixin from "@/components/base/panel/winModalMixin.js";
-import { tInput, tableSelect } from "@/components/base";
-import { getTableList } from "@/api/currency.js";
+import winModalMixin from '@/components/base/panel/winModalMixin.js';
+import { tInput, tableSelect } from '@/components/base';
+import { getTableList } from '@/api/currency.js';
+import tables from '_c/tables';
 export default {
-  name:'RolesModal',
-  mixins: [winModalMixin],
-  components: {
-    tInput,
-    tableSelect
-  },
-  data() {
-    return {
-      // 主数据
-      formData: {},
-			spinShow:false,
-			tab1col:[
+	name: 'OusrModal',
+	mixins: [winModalMixin],
+	props:{
+		addData:{
+			type:Array,
+			default(){
+				return []
+			}
+		}
+	},
+	components: {
+		tInput,
+		tableSelect,
+		tables
+	},
+	data() {
+		return {
+			// 主数据
+			formData: {},
+			spinShow: false,
+			tab1col: [
 				{
-				  type: "index",
-				  width: 60,
-				  align: "center",
-				  key: "Rown"
+					type: 'selection',
+					width: 50,
+					align: 'center',
+					key: 'Rown'
 				},
 				{
-				  title: "角色编码",
-				  key: "L1Code",
+					type: 'index',
+					width: 50,
+					align: 'center',
+					key: 'Rown'
+				},
+				{
+					title: '角色编码',
+					key: 'L1Code',
 					width: 150,
-				  tooltip: true
+					tooltip: true
 				},
 				{
-				  title: "角色名称",
-				  key: "L1Name",
-				  width: 100,
-				  tooltip: true
+					title: '角色名称',
+					key: 'L1Name',
+					width: 100,
+					tooltip: true
 				},
 				{
-				  title: "归属公司",
-				  key: "L1CmpName",
-				  width: 200,
-				  tooltip: true
+					title: '归属公司',
+					key: 'L1CmpName',
+					width: 200,
+					tooltip: true
 				}
 			],
-			tab1data:[],
-			tab2data:[],
-    };
-  },
-  methods: {
-    /**
-     * 获取相关的附表数据
-     */
-    getData(data) {
-      this.spinShow = true;
-      Promise.all([
-        // 获取归属角色
-        getTableList({
-          url: "/Ousr/GetOusr1List"
-        }),
-        // 获取绑定微信
-        getTableList({
-          url: "/Ousr/GetOusrWeChat"
-        })
-      ]).then(resArr => {
-        this.tab1data = resArr[0].data || [];
-        this.tab2data = resArr[1].data || [];
-        this.spinShow = false;
-      });
-    },
-    onOk(){
-      
-    }
-  }
+			tab1select: [],
+			tab1data: [],
+			tab2data: [],
+			cascaderData: [
+				{
+					value: 'beijing',
+					label: '北京',
+					children: [],
+					loading: false
+				},
+				{
+					value: 'hangzhou',
+					label: '杭州',
+					children: [],
+					loading: false
+				}
+			]
+		};
+	},
+	methods: {
+		/**
+		 * 获取相关的附表数据
+		 */
+		getData(data) {
+			this.spinShow = true;
+			Promise.all([
+				// 获取归属角色
+				getTableList({
+					url: '/Ousr/GetOusr1List'
+				}),
+				// 获取绑定微信
+				getTableList({
+					url: '/Ousr/GetOusrWeChat'
+				})
+			]).then(resArr => {
+				this.tab1data = resArr[0].data || [];
+				this.tab2data = resArr[1].data || [];
+				this.spinShow = false;
+			});
+		},
+		onOk() {}
+	}
 };
 </script>
 <style lang="less" scoped>
-	.form .ivu-form-item{
-		margin-bottom: 10px;
+.form .ivu-form-item {
+	margin-bottom: 10px;
+}
+.header {
+	display: flex;
+	> button,
+	> div {
+		margin-right: 5px;
 	}
-	.header{
-		margin-bottom: 5px;
-		margin-top:-10px;
-		button{
-			margin-right: 5px;
-		}
-	}
+}
 </style>

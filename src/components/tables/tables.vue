@@ -7,6 +7,9 @@
       <Input @on-change="handleClear" clearable placeholder="输入关键字搜索" class="search-input" v-model="searchValue"/>
       <Button @click="handleSearch" class="search-btn" type="primary"><Icon type="search"/>&nbsp;&nbsp;搜索</Button>
     </div>
+		<div class="slot-header">
+			<slot name="header"></slot>
+		</div>
     <Table
       ref="tablesMain"
       :data="insideTableData"
@@ -34,7 +37,7 @@
       @on-row-dblclick="onRowDblclick"
       @on-expand="onExpand"
     >
-      <slot name="header" slot="header"></slot>
+			
       <slot name="footer" slot="footer"></slot>
       <slot name="loading" slot="loading"></slot>
     </Table>
@@ -148,10 +151,16 @@ export default {
       edittingCellId: '',
       edittingText: '',
       searchValue: '',
-      searchKey: ''
+      searchKey: '',
+			/**
+			 * 适用于通用方法的数据
+			 */
+			//获取当前选择项
+			selectList:[]
     }
   },
   methods: {
+		//创建一个input
     suportEdit (item, index) {
       item.render = (h, params) => {
         return h(TablesEdit, {
@@ -186,6 +195,61 @@ export default {
       }
       return item
     },
+		//创建一个select
+		createSelect(item,index,{
+			rang=[],
+			code="Code",
+			name="Name"
+		}={}){
+			item.render = (h, params) => {
+			  let optionList = [];
+			  let key = params.column.key;
+			  for(let i = 0;i<rang.length;i++){
+			  	optionList.push(
+			  		h(
+			  			'Option', {
+			  				props: {
+			  					value: rang[i][code],
+			  					label: rang[i][name]
+			  				}
+			  			},`${rang[i][name]}`
+			  		)
+			  	)
+			  }
+			  return h('i-select',
+			  {
+			  	props:{
+			  		value:this.value[params.index][key]
+			  	},
+			  	on:{
+			  		'on-change':(val)=>{
+			  			this.value[params.index][key] = val;
+			  		}
+			  	}
+			  },optionList);
+			}
+			return item
+		},
+		/**
+		 * 创建一个checkbox 选择框
+		 */
+		createCheckbox(item,index){
+			item.render = (h, params) => {
+			  let key = params.column.key;
+			  return h('Checkbox',
+			  {
+			  	props:{
+			  		value:this.value[params.index][key]
+			  	},
+			  	on:{
+			  		'on-change':(val)=>{
+			  			this.value[params.index][key] = val;
+			  		}
+			  	}
+			  });
+			}
+			return item
+		},
     surportHandle (item) {
       let options = item.options || []
       let insideBtns = []
@@ -202,7 +266,16 @@ export default {
     handleColumns (columns) {
       this.insideColumns = columns.map((item, index) => {
         let res = item
-        if (res.editable) res = this.suportEdit(res, index)
+        if (res.editable){
+					switch(item.editableType){
+						//修改模式为select
+						case 'select':res = this.createSelect(res, index ,item.editableConfig);break;
+						//修改模式为checkbox
+						case 'checkbox':res = this.createCheckbox(res, index ,item.editableConfig);break;
+						//默认修改为text
+						default:res = this.suportEdit(res, index);break;
+					}
+				} 
         if (res.key === 'handle') res = this.surportHandle(res)
         return res
       })
@@ -242,6 +315,7 @@ export default {
       this.$emit('on-select-all', selection)
     },
     onSelectionChange (selection) {
+			this.selectList = selection
       this.$emit('on-selection-change', selection)
     },
     onSortChange (column, key, order) {
@@ -258,7 +332,22 @@ export default {
     },
     onExpand (row, status) {
       this.$emit('on-expand', row, status)
-    }
+    },
+		/**
+		 * 对外暴露的方法，用于进行通用性操作
+		 */
+		/**
+		 * 删除行操作
+		 */
+		deleteRow(){
+			let selectlist = this.selectList;
+			if(selectlist.length==0)return
+			let dataList = this.value;
+			for(let i=selectlist.length-1;i>=0;i--){
+				dataList.splice(selectlist[i].initRowIndex,1)
+			}
+			selectlist=[]
+		}
   },
   watch: {
     columns (columns) {

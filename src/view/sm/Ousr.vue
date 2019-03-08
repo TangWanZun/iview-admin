@@ -15,7 +15,7 @@
       <pageTable ref="pageTable" :config="pageTableConfig"  @on-row-dblclick="rowDblclick"></pageTable>
     </panel>
     <!-- 菜单定义新增 -->
-    <winModal ref="winModal" :data="winData" v-model="addWindow"></winModal>
+    <winModal ref="winModal"  v-model="addWindow" :addData="addData"></winModal>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ import { pageTable,panel } from "@/components/base";
 import { getTableList } from "@/api/currency.js";
 // import
 export default {
-  name: "WeiXinRegisterUser",
+  name: "Ousr",
   components: {
     winModal,
     panel,
@@ -37,7 +37,6 @@ export default {
       addWindow: false,
       // loding
       tableLoading: true,
-      winData: {},
       pageTableConfig: {
         columns: [
           {
@@ -52,7 +51,6 @@ export default {
 						width: 180,
             tooltip: true
           },
-          
 					{
 					  title: "账号别名",
 					  key: "UserCodeAlias",
@@ -82,9 +80,20 @@ export default {
           query:''
         }
       },
-      test: true
+      test: true,
+			//添加数据
+			addData:[]
     };
   },
+	created(){
+		getTableList({
+			url:'/Common/GetDynamicList',
+		})
+			.then((res)=>{
+				this.addData = res.data;
+				console.log(res);
+			})
+	},
   methods: {
     /**
      * 查询

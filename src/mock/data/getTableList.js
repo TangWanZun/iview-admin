@@ -1413,11 +1413,15 @@ let funObj = {
 		},
 		//账号管理 归属角色
 		'/Ousr/GetOusr1List'(){
-			return {"success":true,"data":[{"L1Code":"R0000017","L1Name":"客服","L1CmpName":"北京鹏龙海依捷汽车销售服务有限公司"}],"total":1}
+			return {"success":true,"data":[{"L1Code":"R0000017","L1Name":"客服","L1CmpName":"北京鹏龙海依捷汽车销售服务有限公司"},{"L1Code":"R0000018","L1Name":"店总","L1CmpName":"北京鹏龙海依捷汽车销售服务有限公司"},{"L1Code":"R0000018","L1Name":"运维","L1CmpName":"北京鹏龙海依捷汽车销售服务有限公司"},{"L1Code":"R0000019","L1Name":"财务","L1CmpName":"北京鹏龙海依捷汽车销售服务有限公司"}],"total":1}
 		},
 		//账号管理 绑定微信
 		'/Ousr/GetOusrWeChat'(){
 			return {"success":true,"data":[],"total":0}
+		},
+		//账号管理 公司数据
+		'/Common/GetDynamicList'(){
+			return {"success":true,"data":[{"Rown":1,"Code":"G0","Name":"G0 北京鹏龙行"},{"Rown":2,"Code":"G00004","Name":"G00004 宜兴市鹏龙汽车销售服务有限公司"},{"Rown":3,"Code":"G00017","Name":"G00017 安徽鹏龙融富汽车销售服务有限公司"},{"Rown":4,"Code":"G00033","Name":"G00033 北京鹏龙海依捷汽车销售服务有限公司"}],"total":4}
 		}
 }
 export const getTableList = res =>{

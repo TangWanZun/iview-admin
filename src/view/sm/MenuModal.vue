@@ -45,39 +45,21 @@
 			<!-- 表格配置项 -->
 			<Card :padding="5" title="配置表" dis-hover style="max-width:100%">
 				<template v-if="formData.MenuType == 'A01' && formData.leaf">
-					<div class="card-header">
-						<Button>增加CUD</Button>
-						<Button @click="tableData1.push({})">添加行</Button>
-					</div>
-					<tables size="small" border height="200" :columns="columns1" v-model="tableData1">
+					<tables ref="table1" size="small" border height="200" :columns="columns1" v-model="tableData1">
+						<div class="card-header" slot="header">
+							<Button @click="table1AddCUD">增加CUD</Button>
+							<Button type="success" @click="tableData1.push({})">添加行</Button>
+							<Button type="error" @click="$refs.table1.deleteRow()">删除行</Button>
+						</div>
 					</tables>
 				</template>
 				<template v-else-if="formData.MenuType == 'A02'">
-					<div class="card-header">
-						<Button @click="tableData2.push({})">添加行</Button>
-						<Button>删除行</Button>
-					</div>
-					<tables size="small" border height="200" :columns="columns2" v-model="tableData2">
+					<tables size="small" ref="table2" border height="200" :columns="columns2" v-model="tableData2">
+						<div class="card-header" slot="header">
+							<Button type="success" @click="tableData2.push({})">添加行</Button>
+							<Button type="error" @click="$refs.table2.deleteRow()">删除行</Button>
+						</div>
 					</tables>
-					<!-- <Table size="small" border height="200px" :columns="columns2" :data="tableData2">
-						<template slot-scope="{ row, index }" slot="L2Type">
-							<i-select style="width:100px" v-model="tableData2[index].L2Type">
-								<Option v-for="item in tableData2L2Type" :key="item.Code" :value="item.Code" :label="item.Name">
-									<span>{{item.Name}}</span>
-									<span>({{item.Code}})</span>
-								</Option>
-							</i-select>
-						</template>
-						<template slot-scope="{ row, index }" slot="L2Code">
-							<i-input v-model="tableData2[index].L2Code"></i-input>
-						</template>
-						<template slot-scope="{ row, index }" slot="L2Name">
-							<i-input v-model="tableData2[index].L2Name"></i-input>
-						</template>
-						<template slot-scope="{ row, index }" slot="action">
-							<Button type="error" @click="tableData2.splice(index, 1)">删除</Button>
-						</template>
-					</Table> -->
 				</template>
 				<template v-else>
 					暂无配置表
@@ -92,7 +74,6 @@
 <script>
 import { getTableList } from '@/api/currency';
 import tables from '_c/tables';
-import selectRender from '_c/render/select'
 export default {
 	name: 'MenuModal',
 	components:{
@@ -156,7 +137,12 @@ export default {
 			columns1: [
 				{
 					type: 'selection',
-					width: 60,
+					width: 50,
+					align: 'center'
+				},
+				{
+					type: 'index',
+					width: 50,
 					align: 'center'
 				},
 				{
@@ -174,28 +160,34 @@ export default {
 					title: '组',
 					editable:true,
 					key: 'L1Group'
-				},
-				{
-					title: '操作',
-					key:'handle',
-					options: ['delete'],
-					width: 100,
-					align: 'center'
 				}
 			],
 			columns2: [
 				{
 					type: 'selection',
-					width: 60,
+					width: 50,
+					align: 'center'
+				},
+				{
+					type: 'index',
+					width: 50,
 					align: 'center'
 				},
 				{
 					title: '参数类型',
-					render:selectRender(this,{
-						key:'L2Type',
-						keyName:'tableData2',
-						dataName:'tableData2L2Type'
-					}),
+					key:'L2Type',
+					editable:true,
+					editableType:'select',
+					editableConfig:{
+						rang:[
+							{Code:'text',Name:'字符'},
+							{Code:'number',Name:'数字'},
+							{Code:'date',Name:'日期'},
+							{Code:'combobox',Name:'下拉框'},
+							{Code:'mcombobox',Name:'多选框'},
+							{Code:'checkbox',Name:'单选框'},
+						]
+					},
 					width: '150px'
 				},
 				{
@@ -219,43 +211,28 @@ export default {
 					title: '默认值',
 					editable:true,
 					minWidth:100,
+					
 					key: 'L2Default'
 				},
 				{
 					title: '必填',
 					editable:true,
-					width: 80,
-					key: 'L2Required1'
+					editableType:'checkbox',
+					width: 70,
+					align:'center',
+					key: 'L2Required'
 				},
 				{
 					title: '可视',
 					editable:true,
-					width: 80,
-					key: 'L2Visible1'
-				},
-				{
-					fixed:'right',
-					title: '操作',
-					key:'handle',
-					options: ['delete'],
-					width: 100,
-					align: 'center'
+					editableType:'checkbox',
+					align:'center',
+					width: 70,
+					key: 'L2Visible'
 				}
 			],
 			tableData1: [],
 			tableData2: [],
-			//表1中选中选项
-			tableData1ChangeList:[],
-			//表2中选中选项
-			tableData2ChangeList:[],
-			tableData2L2Type:[
-				{Code:'text',Name:'字符'},
-				{Code:'number',Name:'数字'},
-				{Code:'date',Name:'日期'},
-				{Code:'combobox',Name:'下拉框'},
-				{Code:'mcombobox',Name:'多选框'},
-				{Code:'checkbox',Name:'单选框'},
-			],
 			buLoading:false,
 			spinShow:false
 		};
@@ -275,9 +252,25 @@ export default {
 				}
 			})
 		},
-		// 配置表1删除
-		tableData1del(){
-			console.log(this.tableData1ChangeList);
+		//表1 添加CUD
+		table1AddCUD(){
+			if(this.tableData1.length>0){
+				this.$Message.warning('表中已经存在数据');
+				return;
+			}
+			let id  = this.formData.Id;
+			this.tableData1.push({
+				L1Code:id+'panel#addBtn',
+				L1Name:'新增',
+			})
+			this.tableData1.push({
+				L1Code:id+'window#submitBtn',
+				L1Name:'修改',
+			})
+			this.tableData1.push({
+				L1Code:id+'panel#delBtn',
+				L1Name:'删除',
+			})
 		}
 	}
 };
