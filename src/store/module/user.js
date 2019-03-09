@@ -25,7 +25,6 @@ export default {
     messageReadedList: [],
     messageTrashList: [],
     messageContentStore: {},
-    loginInfo: {}
   },
   mutations: {
     setAvator (state, avatorPath) {

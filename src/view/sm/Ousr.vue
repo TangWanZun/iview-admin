@@ -7,7 +7,7 @@
         <Button @click="serechData">查询</Button>
         <Button @click="addClick">新增</Button>
         <Button>删除</Button>
-        <Button icon="ios-download">保存排序</Button>
+        <Button icon="ios-download" arr>保存排序</Button>
       </template>
       <template slot="right">
         <Button type="info">构建模板</Button>
@@ -15,7 +15,7 @@
       <pageTable ref="pageTable" :config="pageTableConfig"  @on-row-dblclick="rowDblclick"></pageTable>
     </panel>
     <!-- 菜单定义新增 -->
-    <winModal ref="winModal"  v-model="addWindow" :addData="addData"></winModal>
+    <winModal ref="winModal"></winModal>
   </div>
 </template>
 
@@ -80,19 +80,26 @@ export default {
           query:''
         }
       },
-      test: true,
-			//添加数据
-			addData:[]
     };
   },
 	created(){
-		getTableList({
-			url:'/Common/GetDynamicList',
-		})
-			.then((res)=>{
-				this.addData = res.data;
-				console.log(res);
-			})
+// 		getTableList({
+// 			url:'/Common/GetDynamicList',
+// 		})
+// 			.then((res)=>{
+// 				//对获取的数据进行处理
+// 				let list = [];
+// 				res.data.forEach(item => {
+// 					list.push({
+// 						value: item.Code,
+// 						label: item.Name,
+// 						children: [],
+// 						loading: false
+// 					});
+// 				});
+// 				this.addData = list;
+// 				console.log(list);
+// 			})
 	},
   methods: {
     /**

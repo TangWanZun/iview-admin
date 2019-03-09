@@ -83,7 +83,7 @@ export default {
 		//传递的数据
 		data: {
 			type: Object
-		}
+		} 
 	},
 	watch: {
 		data(val) {

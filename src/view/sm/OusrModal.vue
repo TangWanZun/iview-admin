@@ -22,7 +22,7 @@
 								@on-selection-change="tab1select = $event"
 							>
 								<div slot="header" class="header">
-									<Cascader :data="cascaderData" size="small"></Cascader>
+									<Cascader :data="dynamicList" :load-data="loadData" size="small"></Cascader>
 									<Button size="small" type="success">添加行</Button>
 									<Button size="small" type="error" @click="$refs.table1.deleteRow()">
 										删除行
@@ -40,7 +40,7 @@
 		</winModal>
 	</div>
 </template>
-
+ 
 <script>
 import winModalMixin from '@/components/base/panel/winModalMixin.js';
 import { tInput, tableSelect } from '@/components/base';
@@ -49,14 +49,6 @@ import tables from '_c/tables';
 export default {
 	name: 'OusrModal',
 	mixins: [winModalMixin],
-	props:{
-		addData:{
-			type:Array,
-			default(){
-				return []
-			}
-		}
-	},
 	components: {
 		tInput,
 		tableSelect,
@@ -101,22 +93,30 @@ export default {
 			],
 			tab1select: [],
 			tab1data: [],
-			tab2data: [],
-			cascaderData: [
-				{
-					value: 'beijing',
-					label: '北京',
-					children: [],
-					loading: false
-				},
-				{
-					value: 'hangzhou',
-					label: '杭州',
-					children: [],
-					loading: false
-				}
-			]
+			tab2data: []
 		};
+	},
+	computed:{
+		dynamicList(){
+			let dataList = this.$store.state.cache.constChche.dynamicList;
+			if(!dataList){
+				return []
+			}
+			//对获取的数据进行处理
+			let list = [];
+			dataList.forEach(item => {
+				list.push({
+					value: item.Code,
+					label: item.Name,
+					children: [],
+					loading: false
+				});
+			});
+			return list;
+		}
+	},
+	created(){
+		this.$store.dispatch('cache/getDynamicList');
 	},
 	methods: {
 		/**
@@ -138,6 +138,55 @@ export default {
 				this.tab2data = resArr[1].data || [];
 				this.spinShow = false;
 			});
+		},
+		//动态获取级联数据表
+		loadData(item, callback) {
+			item.loading = true;
+			getTableList({
+				url:'/Common/GetDynamicList',
+				query:item.value
+			})
+				.then((res)=>{
+					let children = [];
+					res.data.forEach((resItem)=>{
+						children.push({
+							value:resItem.Code,
+							label:resItem.Name
+						})
+					})
+					// item.children = 
+				})
+			setTimeout(() => {
+				if (item.value === 'beijing') {
+					item.children = [
+						{
+							value: 'talkingdata',
+							label: 'TalkingData'
+						},
+						{
+							value: 'baidu',
+							label: '百度'
+						},
+						{
+							value: 'sina',
+							label: '新浪'
+						}
+					];
+				} else if (item.value === 'hangzhou') {
+					item.children = [
+						{
+							value: 'ali',
+							label: '阿里巴巴'
+						},
+						{
+							value: '163',
+							label: '网易'
+						}
+					];
+				}
+				item.loading = false;
+				callback();
+			}, 1000);
 		},
 		onOk() {}
 	}
