@@ -112,7 +112,7 @@ export default {
         }
       }
       fun(list)
-      console.log('生成后菜单', list.children)
+      console.log('生成后菜单', JSON.stringify(list.children))
       state.menuRspList = list.children
       // console.log(state.menuRspList);
     }
